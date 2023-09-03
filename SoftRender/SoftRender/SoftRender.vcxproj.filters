@@ -19,6 +19,12 @@
     <Filter Include="源文件\window">
       <UniqueIdentifier>{608ab288-932d-4ab1-81a1-64e863260128}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\graphics">
+      <UniqueIdentifier>{a1807267-28d1-4df2-b5f9-1e83c00439f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\graphics">
+      <UniqueIdentifier>{3bb47ae6-ca04-49bb-ac52-6ed420135c00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -27,9 +33,18 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="TRasterizer.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TBasicWindow.h">
+      <Filter>头文件\window</Filter>
+    </ClInclude>
+    <ClInclude Include="TRasterizer.h">
+      <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="IRenderTask.h">
       <Filter>头文件\window</Filter>
     </ClInclude>
   </ItemGroup>

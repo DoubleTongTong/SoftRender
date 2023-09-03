@@ -141,9 +141,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
+    <ClCompile Include="TRasterizer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IRenderTask.h" />
     <ClInclude Include="TBasicWindow.h" />
+    <ClInclude Include="TRasterizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
