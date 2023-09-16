@@ -1,5 +1,5 @@
 #pragma once
-
+#define NOMINMAX
 #include <Windows.h>
 #include "TRasterizer.h"
 #include "IRenderTask.h"
@@ -30,9 +30,9 @@ private:
 	TRasterizer  m_rz;
 	IRenderTask* m_pRenderTask;
 
-	DWORD m_lastRenderTime;
+	ULONGLONG m_lastRenderTime;
 	const int TARGET_FPS = 30;
-	const int FRAME_DURATION = 1000 / TARGET_FPS; // in milliseconds
+	const ULONGLONG FRAME_DURATION = 1000 / TARGET_FPS; // in milliseconds
 public:
 	TBasicWindow(const TBasicWindow&) = delete;
 	TBasicWindow& operator=(const TBasicWindow&) = delete;

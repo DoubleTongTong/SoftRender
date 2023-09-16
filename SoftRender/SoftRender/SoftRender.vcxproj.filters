@@ -25,6 +25,18 @@
     <Filter Include="源文件\graphics">
       <UniqueIdentifier>{3bb47ae6-ca04-49bb-ac52-6ed420135c00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks">
+      <UniqueIdentifier>{64003514-86a6-4b9b-ade1-de755885d021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks">
+      <UniqueIdentifier>{3089873e-112e-4394-99bf-1abd29bcbda1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\render_tasks\random_dot">
+      <UniqueIdentifier>{4da50ce3-a111-4c9c-a73e-12b4c8d58559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\random_dot">
+      <UniqueIdentifier>{aac573df-3d18-4006-80fd-df76770f8c0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -34,6 +46,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TRasterizer.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TRandomDotRenderTask.cpp">
+      <Filter>源文件\render_tasks\random_dot</Filter>
+    </ClCompile>
+    <ClCompile Include="TColor.cpp">
       <Filter>源文件\graphics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="IRenderTask.h">
       <Filter>头文件\window</Filter>
+    </ClInclude>
+    <ClInclude Include="TRandomDotRenderTask.h">
+      <Filter>头文件\render_tasks\random_dot</Filter>
+    </ClInclude>
+    <ClInclude Include="TColor.h">
+      <Filter>头文件\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

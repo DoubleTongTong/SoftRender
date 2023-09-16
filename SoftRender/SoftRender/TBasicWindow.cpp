@@ -56,9 +56,25 @@ void TBasicWindow::RunMessageLoop()
 
 HWND TBasicWindow::Create(LPCWSTR windowTitle, int width, int height)
 {
+    RECT rect;
+    rect.left = 0;
+    rect.top = 0;
+    rect.right = width;
+    rect.bottom = height;
+
+	/**
+     * @note 调整窗口尺寸以匹配客户区
+     *
+     * 这边 width 和 height 是客户区的大小。
+     * 但是，窗口的总尺寸还包括边框、标题栏等其他部分。
+     * 使用 AdjustWindowRect，我们可以根据客户区的期望尺寸来调整窗口的总尺寸，
+     * 从而确保客户区的尺寸与我们预期的 width 和 height 相匹配。
+     */
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+
     HWND hWnd = CreateWindowEx(0, m_className, windowTitle,
         WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
-        width, height, NULL, NULL, m_hInstance, NULL);
+        rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, m_hInstance, NULL);
 
     if (hWnd == NULL)
     {
@@ -129,13 +145,13 @@ void TBasicWindow::CreateDrawResources(int width, int height)
     SelectObject(m_hMemDC, m_hBitmap);
 
     m_rz = TRasterizer((uint32_t*)m_pBits, width, height);
-    m_rz.Clear(TRasterizer::MakeRGB(255, 0, 0));
+    m_rz.Clear(TRGB888(255, 0, 0));
 }
 
 void TBasicWindow::UpdateFrame()
 {
-    DWORD currentTime = GetTickCount64();
-    DWORD deltaTime = currentTime - m_lastRenderTime;
+    ULONGLONG currentTime = GetTickCount64();
+    ULONGLONG deltaTime = currentTime - m_lastRenderTime;
 
     if (deltaTime >= FRAME_DURATION)
     {

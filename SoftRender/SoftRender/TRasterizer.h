@@ -1,5 +1,5 @@
 #pragma once
-#include <stdint.h>
+#include "TColor.h"
 
 class TRasterizer
 {
@@ -10,17 +10,17 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 
-	void SetPixel(int x, int y, uint32_t color);
-	void Clear(uint32_t color);
+	void SetPixel(int x, int y, TRGB888 color);
+	void DrawLine(int x1, int y1, TRGB888 color1, int x2, int y2, TRGB888 color2);
+	void Clear(TRGB888 color);
 
-	static inline uint32_t MakeRGB(uint8_t r, uint8_t g, uint8_t b)
-	{
-		return (uint32_t)(b | (g << 8) | (r << 16));
-	}
 private:
 	uint32_t* m_pBits;  // raw pixel data
 	int       m_width;
 	int       m_height;
+
+	void DrawLineDifferential(int x1, int y1, int x2, int y2);
+	void DrawLineBresenham(int x1, int y1, TRGB888 color1, int x2, int y2, TRGB888 color);
 
 public:
 	TRasterizer(TRasterizer&& other) noexcept;
