@@ -50,26 +50,26 @@ void TRasterizer::DrawLineDifferential(int x1, int y1, int x2, int y2)
 	if (dx == 0)
 	{
 		deltaX = 0;
-		deltaY = dy >= 0 ? 1 : -1;
+		deltaY = dy >= 0 ? 1.0f : -1.0f;
 		numSteps = abs(dy);
 	}
 	else if (fabsf(k) <= 1)
 	{
-		deltaX = dx >= 0 ? 1 : -1;
+		deltaX = dx >= 0 ? 1.0f : -1.0f;
 		deltaY = deltaX * k;
 		numSteps = abs(dx);
 	}
 	else
 	{
-		deltaY = dy >= 0 ? 1 : -1;
+		deltaY = dy >= 0 ? 1.0f : -1.0f;
 		deltaX = deltaY / k;
 		numSteps = abs(dy);
 	}
 
-	float x = x1, y = y1;
+	float x = (float)x1, y = (float)y1;
 	for (int i = 0; i <= numSteps; i++)
 	{
-		SetPixel(round(x), round(y), TRGB888(0, 0, 0));
+		SetPixel((int)round(x), (int)round(y), TRGB888(0, 0, 0));
 		x += deltaX;
 		y += deltaY;
 	}

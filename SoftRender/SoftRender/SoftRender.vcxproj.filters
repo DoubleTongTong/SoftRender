@@ -37,6 +37,21 @@
     <Filter Include="源文件\render_tasks\random_dot">
       <UniqueIdentifier>{aac573df-3d18-4006-80fd-df76770f8c0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\radial_lines">
+      <UniqueIdentifier>{d0ab2588-4caf-45aa-959d-dff603e19ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\radial_lines">
+      <UniqueIdentifier>{cab24ca6-bc20-4e2d-afee-69081259d2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\math">
+      <UniqueIdentifier>{d42e9d9b-5a25-4030-9976-1721cf63fa01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\render_tasks\vector_operations">
+      <UniqueIdentifier>{1ab187de-a36f-4fb6-8043-c80963a2dec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\vector_operations">
+      <UniqueIdentifier>{68fba75e-ddaf-4299-8b0f-6a73a79dd9ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -54,6 +69,12 @@
     <ClCompile Include="TColor.cpp">
       <Filter>源文件\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="TRadialLinesRenderTask.cpp">
+      <Filter>源文件\render_tasks\radial_lines</Filter>
+    </ClCompile>
+    <ClCompile Include="TVectorOpsRenderTask.cpp">
+      <Filter>源文件\render_tasks\vector_operations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TBasicWindow.h">
@@ -70,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="TColor.h">
       <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TRadialLinesRenderTask.h">
+      <Filter>头文件\render_tasks\radial_lines</Filter>
+    </ClInclude>
+    <ClInclude Include="TVector.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="TVectorOpsRenderTask.h">
+      <Filter>头文件\render_tasks\vector_operations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

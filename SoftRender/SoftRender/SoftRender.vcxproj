@@ -142,15 +142,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TColor.cpp" />
+    <ClCompile Include="TRadialLinesRenderTask.cpp" />
     <ClCompile Include="TRandomDotRenderTask.cpp" />
     <ClCompile Include="TRasterizer.cpp" />
+    <ClCompile Include="TVectorOpsRenderTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderTask.h" />
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TColor.h" />
+    <ClInclude Include="TRadialLinesRenderTask.h" />
     <ClInclude Include="TRandomDotRenderTask.h" />
     <ClInclude Include="TRasterizer.h" />
+    <ClInclude Include="TVector.h" />
+    <ClInclude Include="TVectorOpsRenderTask.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
