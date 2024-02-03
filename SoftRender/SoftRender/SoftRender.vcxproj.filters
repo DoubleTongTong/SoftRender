@@ -52,6 +52,12 @@
     <Filter Include="源文件\render_tasks\vector_operations">
       <UniqueIdentifier>{68fba75e-ddaf-4299-8b0f-6a73a79dd9ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\colorful_triangle">
+      <UniqueIdentifier>{7725a980-7cc0-4de4-a401-c737543973a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\colorful_triangle">
+      <UniqueIdentifier>{3eab22b3-956f-42d6-ba81-ff446f6db812}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -74,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="TVectorOpsRenderTask.cpp">
       <Filter>源文件\render_tasks\vector_operations</Filter>
+    </ClCompile>
+    <ClCompile Include="TColorfulTriangleRenderTask.cpp">
+      <Filter>源文件\render_tasks\colorful_triangle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="TVectorOpsRenderTask.h">
       <Filter>头文件\render_tasks\vector_operations</Filter>
+    </ClInclude>
+    <ClInclude Include="TColorfulTriangleRenderTask.h">
+      <Filter>头文件\render_tasks\colorful_triangle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

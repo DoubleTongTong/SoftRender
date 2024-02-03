@@ -122,6 +122,46 @@ void TRasterizer::DrawLineBresenham(int x1, int y1, TRGB888 color1, int x2, int 
 	}
 }
 
+void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,
+	TRGB888 color1, TRGB888 color2, TRGB888 color3)
+{
+	int minX = std::min(p1.x(), std::min(p2.x(), p3.x()));
+	int maxX = std::max(p1.x(), std::max(p2.x(), p3.x()));
+	int minY = std::min(p1.y(), std::min(p2.y(), p3.y()));
+	int maxY = std::max(p1.y(), std::max(p2.y(), p3.y()));
+
+	tmath::Vec2i p, pp1, pp2, pp3;
+	int c1, c2, c3;
+	float area = (float)std::abs(tmath::cross(p2 - p1, p3 - p1));
+
+	for (int i = minX; i <= maxX; i++)
+	{
+		p.x() = i;
+		for (int j = minY; j <= maxY; j++)
+		{
+			p.y() = j;
+
+			pp1.x() = p1.x() - p.x(); pp1.y() = p1.y() - p.y(); // pp1 = p1 - p;
+			pp2.x() = p2.x() - p.x(); pp2.y() = p2.y() - p.y(); // pp2 = p2 - p;
+			pp3.x() = p3.x() - p.x(); pp3.y() = p3.y() - p.y(); // pp3 = p3 - p;
+
+			c1 = tmath::cross(pp1, pp2);
+			c2 = tmath::cross(pp2, pp3);
+			c3 = tmath::cross(pp3, pp1);
+
+			if ((c1 > 0 && c2 > 0 && c3 > 0) ||
+				(c1 < 0 && c2 < 0 && c3 < 0))
+			{
+				TRGB888 color = TRGB888::Interpolate(
+					color1, std::abs(c2) / area,
+					color2, std::abs(c3) / area,
+					color3, std::abs(c1) / area);
+				SetPixel(i, j, color);
+			}
+		}
+	}
+}
+
 void TRasterizer::Clear(TRGB888 color)
 {
 	for (int i = 0; i < m_width * m_height; i++)
