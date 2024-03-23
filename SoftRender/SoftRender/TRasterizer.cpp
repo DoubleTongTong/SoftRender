@@ -25,7 +25,7 @@ int TRasterizer::GetHeight() const
 	return m_height;
 }
 
-void TRasterizer::SetPixel(int x, int y, TRGB888 color)
+void TRasterizer::SetPixel(int x, int y, TRGBA color)
 {
 	if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		return;
@@ -33,7 +33,7 @@ void TRasterizer::SetPixel(int x, int y, TRGB888 color)
 	m_pBits[y * m_width + x] = color.ToBGR888();
 }
 
-void TRasterizer::DrawLine(int x1, int y1, TRGB888 color1, int x2, int y2, TRGB888 color2)
+void TRasterizer::DrawLine(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color2)
 {
 	DrawLineBresenham(x1, y1, color1, x2, y2, color2);
 }
@@ -69,13 +69,13 @@ void TRasterizer::DrawLineDifferential(int x1, int y1, int x2, int y2)
 	float x = (float)x1, y = (float)y1;
 	for (int i = 0; i <= numSteps; i++)
 	{
-		SetPixel((int)round(x), (int)round(y), TRGB888(0, 0, 0));
+		SetPixel((int)round(x), (int)round(y), TRGBA(0, 0, 0));
 		x += deltaX;
 		y += deltaY;
 	}
 }
 
-void TRasterizer::DrawLineBresenham(int x1, int y1, TRGB888 color1, int x2, int y2, TRGB888 color2)
+void TRasterizer::DrawLineBresenham(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color2)
 {
 	bool useSwappedXY = std::abs(y2 - y1) > std::abs(x2 - x1);
 
@@ -103,7 +103,7 @@ void TRasterizer::DrawLineBresenham(int x1, int y1, TRGB888 color1, int x2, int 
 	for (int x = x1; x <= x2; x++)
 	{
 		float t = deltaX == 0 ? 0 : (float)(x - x1) / (float)deltaX;
-		TRGB888 interpolatedColor = color1.Lerp(color2, t);
+		TRGBA interpolatedColor = color1.Lerp(color2, t);
 
 		if (useSwappedXY)
 			SetPixel(y, x, interpolatedColor);
@@ -123,7 +123,7 @@ void TRasterizer::DrawLineBresenham(int x1, int y1, TRGB888 color1, int x2, int 
 }
 
 void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,
-	TRGB888 color1, TRGB888 color2, TRGB888 color3)
+	TRGBA color1, TRGBA color2, TRGBA color3)
 {
 	int minX = std::min(p1.x(), std::min(p2.x(), p3.x()));
 	int maxX = std::max(p1.x(), std::max(p2.x(), p3.x()));
@@ -152,7 +152,7 @@ void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p
 			if ((c1 > 0 && c2 > 0 && c3 > 0) ||
 				(c1 < 0 && c2 < 0 && c3 < 0))
 			{
-				TRGB888 color = TRGB888::Interpolate(
+				TRGBA color = TRGBA::Interpolate(
 					color1, std::abs(c2) / area,
 					color2, std::abs(c3) / area,
 					color3, std::abs(c1) / area);
@@ -162,7 +162,7 @@ void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p
 	}
 }
 
-void TRasterizer::Clear(TRGB888 color)
+void TRasterizer::Clear(TRGBA color)
 {
 	for (int i = 0; i < m_width * m_height; i++)
 	{

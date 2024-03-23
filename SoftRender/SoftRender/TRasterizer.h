@@ -11,11 +11,11 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 
-	void SetPixel(int x, int y, TRGB888 color);
-	void DrawLine(int x1, int y1, TRGB888 color1, int x2, int y2, TRGB888 color2);
+	void SetPixel(int x, int y, TRGBA color);
+	void DrawLine(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color2);
 	void DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,
-		TRGB888 color1, TRGB888 color2, TRGB888 color3);
-	void Clear(TRGB888 color);
+		TRGBA color1, TRGBA color2, TRGBA color3);
+	void Clear(TRGBA color);
 
 private:
 	uint32_t* m_pBits;  // raw pixel data
@@ -23,7 +23,7 @@ private:
 	int       m_height;
 
 	void DrawLineDifferential(int x1, int y1, int x2, int y2);
-	void DrawLineBresenham(int x1, int y1, TRGB888 color1, int x2, int y2, TRGB888 color);
+	void DrawLineBresenham(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color);
 
 public:
 	TRasterizer(TRasterizer&& other) noexcept;

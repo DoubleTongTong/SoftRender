@@ -9,7 +9,7 @@ void TRadialLinesRenderTask::Render(TRasterizer& rz)
 	const int angleInterval = 5;
 	int r = std::min(rz.GetWidth(), rz.GetHeight()) / 2;
 
-	rz.Clear(TRGB888(0, 0, 0));
+	rz.Clear(TRGBA(0, 0, 0));
 	for (int angle = 0; angle < 360; angle += angleInterval)
 	{
 		double radian = angle * 3.14159265358979323846 / 180.0;
@@ -17,7 +17,7 @@ void TRadialLinesRenderTask::Render(TRasterizer& rz)
 		int endX = (int)(centerX + cos(radian) * r);
 		int endY = (int)(centerY + sin(radian) * r);
 
-		rz.DrawLine(centerX, centerY, TRGB888(rand() % 255, rand() % 255, rand() % 255),
-			endX, endY, TRGB888(rand() % 255, rand() % 255, rand() % 255));
+		rz.DrawLine(centerX, centerY, TRGBA(rand() % 255, rand() % 255, rand() % 255),
+			endX, endY, TRGBA(rand() % 255, rand() % 255, rand() % 255));
 	}
 }

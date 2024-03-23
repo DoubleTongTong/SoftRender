@@ -145,7 +145,7 @@ void TBasicWindow::CreateDrawResources(int width, int height)
     SelectObject(m_hMemDC, m_hBitmap);
 
     m_rz = TRasterizer((uint32_t*)m_pBits, width, height);
-    m_rz.Clear(TRGB888(255, 0, 0));
+    m_rz.Clear(TRGBA(255, 0, 0));
 }
 
 void TBasicWindow::UpdateFrame()
