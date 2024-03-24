@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TColorfulTriangleRenderTask.h"
+#include "TImageDisplayTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TColorfulTriangleRenderTask task;
+    TImageDisplayTask task;
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

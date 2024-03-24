@@ -30,7 +30,21 @@ void TRasterizer::SetPixel(int x, int y, TRGBA color)
 	if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		return;
 
-	m_pBits[y * m_width + x] = color.ToBGR888();
+	if (m_state.IsBlendEnabled())
+		BlendPixel(x, y, color.r, color.g, color.b, color.a);
+	else
+		m_pBits[y * m_width + x] = color.ToBGR888();
+}
+
+void TRasterizer::SetPixel(int x, int y, BGRA* color)
+{
+	if (x < 0 || x >= m_width || y < 0 || y >= m_height)
+		return;
+
+	if (m_state.IsBlendEnabled())
+		BlendPixel(x, y, color->r, color->g, color->b, color->a);
+	else
+		m_pBits[y * m_width + x] = *reinterpret_cast<uint32_t*>(color);
 }
 
 void TRasterizer::DrawLine(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color2)
@@ -162,6 +176,34 @@ void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p
 	}
 }
 
+void TRasterizer::DrawImage(const TImage& image, int startX, int startY)
+{
+	int x, y;
+	BGRA* data = (BGRA*)image.GetData();
+
+	for (int h = 0; h < image.GetHeight(); h++)
+	{
+		y = startY + h;
+		for (int w = 0; w < image.GetWidth(); w++)
+		{
+			x = startX + w;
+			SetPixel(x, y, data + h * image.GetWidth() + w);
+		}
+	}
+}
+
+void TRasterizer::BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	BGRA* dstPixel = reinterpret_cast<BGRA*>(&m_pBits[y * m_width + x]);
+
+	float srcAlpha = a / 255.0f;
+	float dstAlpha = 1.0f - srcAlpha;
+
+	dstPixel->b = (b * srcAlpha + dstPixel->b * dstAlpha);
+	dstPixel->g = (g * srcAlpha + dstPixel->g * dstAlpha);
+	dstPixel->r = (r * srcAlpha + dstPixel->r * dstAlpha);
+}
+
 void TRasterizer::Clear(TRGBA color)
 {
 	for (int i = 0; i < m_width * m_height; i++)
@@ -170,10 +212,16 @@ void TRasterizer::Clear(TRGBA color)
 	}
 }
 
+void TRasterizer::SetBlend(bool enable)
+{
+	m_state.SetBlend(enable);
+}
+
 TRasterizer::TRasterizer(TRasterizer&& other) noexcept
 	: m_pBits(other.m_pBits),
 	  m_width(other.m_width),
-	  m_height(other.m_height)
+	  m_height(other.m_height),
+	  m_state()
 {
 }
 

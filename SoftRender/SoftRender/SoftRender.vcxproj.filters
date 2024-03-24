@@ -58,6 +58,21 @@
     <Filter Include="源文件\render_tasks\colorful_triangle">
       <UniqueIdentifier>{3eab22b3-956f-42d6-ba81-ff446f6db812}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\external">
+      <UniqueIdentifier>{dec29c68-8b7f-49ae-90b1-ca7824cdaee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\external\stb">
+      <UniqueIdentifier>{4c5078b6-28e6-4d1f-a524-416fd5e5a2d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\image">
+      <UniqueIdentifier>{786d9925-e7ab-4434-8806-117903485536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\render_tasks\image_display">
+      <UniqueIdentifier>{233ae118-ff46-45a0-bd4b-65e190f91fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\image_display">
+      <UniqueIdentifier>{006a9ab0-7e53-4dc6-a95b-096870157062}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -83,6 +98,15 @@
     </ClCompile>
     <ClCompile Include="TColorfulTriangleRenderTask.cpp">
       <Filter>源文件\render_tasks\colorful_triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="TImage.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TImageDisplayTask.cpp">
+      <Filter>源文件\render_tasks\image_display</Filter>
+    </ClCompile>
+    <ClCompile Include="TRenderState.cpp">
+      <Filter>源文件\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,5 +137,25 @@
     <ClInclude Include="TColorfulTriangleRenderTask.h">
       <Filter>头文件\render_tasks\colorful_triangle</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>头文件\external\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="TImage.h">
+      <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TImageDisplayTask.h">
+      <Filter>头文件\render_tasks\image_display</Filter>
+    </ClInclude>
+    <ClInclude Include="TRenderState.h">
+      <Filter>头文件\graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\dog.jpg">
+      <Filter>资源文件\image</Filter>
+    </Image>
+    <Image Include="image\ivysaur.png">
+      <Filter>资源文件\image</Filter>
+    </Image>
   </ItemGroup>
 </Project>

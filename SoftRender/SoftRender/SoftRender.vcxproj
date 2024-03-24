@@ -93,6 +93,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy /Y /D "$(ProjectDir)image\*" "$(OutDir)image\" </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -121,6 +124,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy /Y /D "$(ProjectDir)image\*" "$(OutDir)image\" </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -142,22 +148,33 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TColor.cpp" />
+    <ClCompile Include="TImage.cpp" />
+    <ClCompile Include="TImageDisplayTask.cpp" />
     <ClCompile Include="TRadialLinesRenderTask.cpp" />
     <ClCompile Include="TRandomDotRenderTask.cpp" />
     <ClCompile Include="TRasterizer.cpp" />
+    <ClCompile Include="TRenderState.cpp" />
     <ClCompile Include="TVectorOpsRenderTask.cpp" />
     <ClCompile Include="TColorfulTriangleRenderTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderTask.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TColor.h" />
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
+    <ClInclude Include="TImage.h" />
+    <ClInclude Include="TImageDisplayTask.h" />
     <ClInclude Include="TRadialLinesRenderTask.h" />
     <ClInclude Include="TRandomDotRenderTask.h" />
     <ClInclude Include="TRasterizer.h" />
+    <ClInclude Include="TRenderState.h" />
     <ClInclude Include="TVector.h" />
     <ClInclude Include="TVectorOpsRenderTask.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\dog.jpg" />
+    <Image Include="image\ivysaur.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
