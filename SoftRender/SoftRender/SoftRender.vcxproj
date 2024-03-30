@@ -154,6 +154,7 @@
     <ClCompile Include="TRandomDotRenderTask.cpp" />
     <ClCompile Include="TRasterizer.cpp" />
     <ClCompile Include="TRenderState.cpp" />
+    <ClCompile Include="TTextureUVRenderTask.cpp" />
     <ClCompile Include="TVectorOpsRenderTask.cpp" />
     <ClCompile Include="TColorfulTriangleRenderTask.cpp" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="TRandomDotRenderTask.h" />
     <ClInclude Include="TRasterizer.h" />
     <ClInclude Include="TRenderState.h" />
+    <ClInclude Include="TTextureUVRenderTask.h" />
     <ClInclude Include="TVector.h" />
     <ClInclude Include="TVectorOpsRenderTask.h" />
   </ItemGroup>

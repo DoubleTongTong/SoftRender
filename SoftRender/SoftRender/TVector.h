@@ -142,9 +142,13 @@ namespace tmath
 
 		T& x() { return Vector<T, 2>::elements[0]; }
 		T& y() { return Vector<T, 2>::elements[1]; }
-
 		const T& x() const { return Vector<T, 2>::elements[0]; }
 		const T& y() const { return Vector<T, 2>::elements[1]; }
+
+		T& u() { return Vector<T, 2>::elements[0]; }
+		T& v() { return Vector<T, 2>::elements[1]; }
+		const T& u() const { return Vector<T, 2>::elements[0]; }
+		const T& v() const { return Vector<T, 2>::elements[1]; }
 	};
 
 	template<typename T>
@@ -207,4 +211,5 @@ namespace tmath
 	using Vec3f = Vector3<float>;
 	using Vec3i = Vector3<int>;
 	using Point2i = Vector2<int>;
+	using UV2f = Vector2<float>;
 }

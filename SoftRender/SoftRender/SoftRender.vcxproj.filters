@@ -73,6 +73,12 @@
     <Filter Include="源文件\render_tasks\image_display">
       <UniqueIdentifier>{006a9ab0-7e53-4dc6-a95b-096870157062}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\texture_uv">
+      <UniqueIdentifier>{5ae4c65b-4d3e-4671-bde2-c0c61c7aa7b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\texture_uv">
+      <UniqueIdentifier>{7c29dc80-3616-4315-b25b-b0cc390ac066}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -107,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="TRenderState.cpp">
       <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TTextureUVRenderTask.cpp">
+      <Filter>源文件\render_tasks\texture_uv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="TRenderState.h">
       <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TTextureUVRenderTask.h">
+      <Filter>头文件\render_tasks\texture_uv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

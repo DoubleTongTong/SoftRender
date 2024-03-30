@@ -171,3 +171,13 @@ void TBasicWindow::SetRenderTask(IRenderTask* renderTask)
 {
     m_pRenderTask = renderTask;
 }
+
+int TBasicWindow::GetWindowWidth()
+{
+    return m_rz.GetWidth();
+}
+
+int TBasicWindow::GetWindowHeight()
+{
+    return m_rz.GetHeight();
+}

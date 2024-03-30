@@ -14,6 +14,9 @@ public:
 	~TBasicWindow();
 	void RunMessageLoop();
 	void SetRenderTask(IRenderTask* renderTask);
+
+	int GetWindowWidth();
+	int GetWindowHeight();
 private:
 	HWND Create(LPCWSTR windowTitle, int width, int height);
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

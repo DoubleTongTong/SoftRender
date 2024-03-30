@@ -18,10 +18,13 @@ public:
 	void DrawLine(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color2);
 	void DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,
 		TRGBA color1, TRGBA color2, TRGBA color3);
+	void DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,
+		const tmath::UV2f& uv1, const tmath::UV2f& uv2, const tmath::UV2f& uv3);
 	void DrawImage(const TImage& image, int startX, int startY);
 	void Clear(TRGBA color);
 
 	void SetBlend(bool enable);
+	void SetTexture(const TImage* texture);
 private:
 	uint32_t* m_pBits;  // raw pixel data
 	int       m_width;
@@ -34,6 +37,7 @@ private:
 	void DrawLineBresenham(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color);
 
 	void BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+	BGRA* SampleTexture(const tmath::UV2f& uv);
 public:
 	TRasterizer(TRasterizer&& other) noexcept;
 	TRasterizer& operator=(TRasterizer&& other) noexcept;
