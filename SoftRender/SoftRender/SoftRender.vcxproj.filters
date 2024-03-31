@@ -85,6 +85,12 @@
     <Filter Include="源文件\render_tasks\bilinear_uv">
       <UniqueIdentifier>{e22e943e-c901-4392-add3-f07b25804a49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\wrap_mode">
+      <UniqueIdentifier>{fe302413-bd31-4040-b05e-b52a41ad2f74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\wrap_mode">
+      <UniqueIdentifier>{37c3214d-06fc-4a32-b094-7037bf5b4dc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -125,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="TBilinearUVRenderTask.cpp">
       <Filter>源文件\render_tasks\bilinear_uv</Filter>
+    </ClCompile>
+    <ClCompile Include="TWrapModeRenderTask.cpp">
+      <Filter>源文件\render_tasks\wrap_mode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="TBilinearUVRenderTask.h">
       <Filter>头文件\render_tasks\bilinear_uv</Filter>
+    </ClInclude>
+    <ClInclude Include="TWrapModeRenderTask.h">
+      <Filter>头文件\render_tasks\wrap_mode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

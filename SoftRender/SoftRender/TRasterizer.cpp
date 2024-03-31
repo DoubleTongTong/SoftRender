@@ -261,31 +261,33 @@ void TRasterizer::BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint
 
 BGRA* TRasterizer::SampleTextureNearest(const tmath::UV2f& uv)
 {
+	tmath::UV2f adjustedUV = AdjustUV(uv);
 	const TImage* texture = m_state.GetTexture();
 
 	int w = texture->GetWidth();
 	int h = texture->GetHeight();
 
-	int x = static_cast<int>(uv.u() * w) % (w - 1);
-	int y = static_cast<int>(uv.v() * h) % (h - 1);
+	int x = static_cast<int>(adjustedUV.u() * (w - 1));
+	int y = static_cast<int>(adjustedUV.v() * (h - 1));
 	BGRA* data = (BGRA*)texture->GetData();
 	return (data + y * w + x);
 }
 
 TRGBA TRasterizer::SampleTextureBilinear(const tmath::UV2f& uv)
 {
+	tmath::UV2f adjustedUV = AdjustUV(uv);
 	const TImage* texture = m_state.GetTexture();
 
 	int w = texture->GetWidth();
 	int h = texture->GetHeight();
 
-	float fx = uv.u() * (w - 1);
-	float fy = uv.v() * (h - 1);
+	float fx = adjustedUV.u() * (w - 1);
+	float fy = adjustedUV.v() * (h - 1);
 
-	int left = (int)floorf(fx) % (w - 1);
-	int right = (int)ceilf(fx) % (w - 1);
-	int top = (int)floorf(fy) % (h - 1);
-	int bottom = (int)ceilf(fy) % (h - 1);
+	int left = (int)floorf(fx);
+	int right = (int)ceilf(fx);
+	int top = (int)floorf(fy);
+	int bottom = (int)ceilf(fy);
 
 	float lerpX = fx - left;
 	float lerpY = fy - top;
@@ -300,6 +302,26 @@ TRGBA TRasterizer::SampleTextureBilinear(const tmath::UV2f& uv)
 	TRGBA interpBottom = bottomLeft.Lerp(bottomRight, lerpY);
 
 	return interpTop.Lerp(interpBottom, lerpY);
+}
+
+tmath::UV2f TRasterizer::AdjustUV(const tmath::UV2f& uv)
+{
+	switch (m_state.GetWrapMode())
+	{
+	case TWrapMode::Mirror:
+		return {
+			1.0f - fabs(fmodf(fmodf(uv.u(), 2.0f) + 2.0f, 2.0f) - 1.0f),
+			1.0f - fabs(fmodf(fmodf(uv.v(), 2.0f) + 2.0f, 2.0f) - 1.0f)
+		};
+		break;
+	case TWrapMode::Repeat:
+	default:
+		return {
+			fmodf(fmodf(uv.u(), 1.0f) + 1.0f, 1.0f),
+			fmodf(fmodf(uv.v(), 1.0f) + 1.0f, 1.0f)
+		};
+		break;
+	}
 }
 
 void TRasterizer::Clear(TRGBA color)
@@ -323,6 +345,11 @@ void TRasterizer::SetTexture(const TImage* texture)
 void TRasterizer::SetSampleMode(TSampleMode mode)
 {
 	m_state.SetSampleMode(mode);
+}
+
+void TRasterizer::SetWrapMode(TWrapMode mode)
+{
+	m_state.SetWrapMode(mode);
 }
 
 TRasterizer::TRasterizer(TRasterizer&& other) noexcept

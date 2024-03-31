@@ -26,6 +26,7 @@ public:
 	void SetBlend(bool enable);
 	void SetTexture(const TImage* texture);
 	void SetSampleMode(TSampleMode mode);
+	void SetWrapMode(TWrapMode mode);
 private:
 	uint32_t* m_pBits;  // raw pixel data
 	int       m_width;
@@ -40,6 +41,8 @@ private:
 	void BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 	BGRA* SampleTextureNearest(const tmath::UV2f& uv);
 	TRGBA SampleTextureBilinear(const tmath::UV2f& uv);
+
+	tmath::UV2f AdjustUV(const tmath::UV2f& uv);
 public:
 	TRasterizer(TRasterizer&& other) noexcept;
 	TRasterizer& operator=(TRasterizer&& other) noexcept;

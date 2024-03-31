@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TBilinearUVRenderTask.h"
+#include "TWrapModeRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TBilinearUVRenderTask task(win);
+    TWrapModeRenderTask task(TWrapMode::Mirror);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

@@ -27,8 +27,12 @@ public:
 
 	void SetSampleMode(TSampleMode mode);
 	TSampleMode GetSampleMode();
+
+	void SetWrapMode(TWrapMode mode);
+	TWrapMode GetWrapMode();
 private:
 	bool m_blendEnabled;
 	const TImage* m_texture;
 	TSampleMode m_sampleMode;
+	TWrapMode m_wrapMode;
 };
