@@ -25,6 +25,7 @@ public:
 
 	void SetBlend(bool enable);
 	void SetTexture(const TImage* texture);
+	void SetSampleMode(TSampleMode mode);
 private:
 	uint32_t* m_pBits;  // raw pixel data
 	int       m_width;
@@ -37,7 +38,8 @@ private:
 	void DrawLineBresenham(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color);
 
 	void BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-	BGRA* SampleTexture(const tmath::UV2f& uv);
+	BGRA* SampleTextureNearest(const tmath::UV2f& uv);
+	TRGBA SampleTextureBilinear(const tmath::UV2f& uv);
 public:
 	TRasterizer(TRasterizer&& other) noexcept;
 	TRasterizer& operator=(TRasterizer&& other) noexcept;

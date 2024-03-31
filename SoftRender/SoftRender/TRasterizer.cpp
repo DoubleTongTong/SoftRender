@@ -215,7 +215,17 @@ void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p
 				uv.u() = uv1.u() * alpha + uv2.u() * beta + uv3.u() * gamma;
 				uv.v() = uv1.v() * alpha + uv2.v() * beta + uv3.v() * gamma;
 
-				SetPixel(i, j, SampleTexture(uv));
+				switch (m_state.GetSampleMode())
+				{
+				case TSampleMode::Bilinear:
+					SetPixel(i, j, SampleTextureBilinear(uv));
+					break;
+
+				case TSampleMode::Nearest:
+				default:
+					SetPixel(i, j, SampleTextureNearest(uv));
+					break;
+				}
 			}
 		}
 	}
@@ -249,17 +259,47 @@ void TRasterizer::BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint
 	dstPixel->r = (r * srcAlpha + dstPixel->r * dstAlpha);
 }
 
-BGRA* TRasterizer::SampleTexture(const tmath::UV2f& uv)
+BGRA* TRasterizer::SampleTextureNearest(const tmath::UV2f& uv)
 {
-	const TImage* m_texture = m_state.GetTexture();
+	const TImage* texture = m_state.GetTexture();
 
-	int w = m_texture->GetWidth();
-	int h = m_texture->GetHeight();
+	int w = texture->GetWidth();
+	int h = texture->GetHeight();
 
 	int x = static_cast<int>(uv.u() * w) % (w - 1);
 	int y = static_cast<int>(uv.v() * h) % (h - 1);
-	BGRA* data = (BGRA*)m_texture->GetData();
+	BGRA* data = (BGRA*)texture->GetData();
 	return (data + y * w + x);
+}
+
+TRGBA TRasterizer::SampleTextureBilinear(const tmath::UV2f& uv)
+{
+	const TImage* texture = m_state.GetTexture();
+
+	int w = texture->GetWidth();
+	int h = texture->GetHeight();
+
+	float fx = uv.u() * (w - 1);
+	float fy = uv.v() * (h - 1);
+
+	int left = (int)floorf(fx) % (w - 1);
+	int right = (int)ceilf(fx) % (w - 1);
+	int top = (int)floorf(fy) % (h - 1);
+	int bottom = (int)ceilf(fy) % (h - 1);
+
+	float lerpX = fx - left;
+	float lerpY = fy - top;
+
+	BGRA* data = (BGRA*)texture->GetData();
+	TRGBA topLeft(&data[top * w + left]);
+	TRGBA topRight(&data[top * w + right]);
+	TRGBA bottomLeft(&data[bottom * w + left]);
+	TRGBA bottomRight(&data[bottom * w + right]);
+
+	TRGBA interpTop = topLeft.Lerp(topRight, lerpX);
+	TRGBA interpBottom = bottomLeft.Lerp(bottomRight, lerpY);
+
+	return interpTop.Lerp(interpBottom, lerpY);
 }
 
 void TRasterizer::Clear(TRGBA color)
@@ -278,6 +318,11 @@ void TRasterizer::SetBlend(bool enable)
 void TRasterizer::SetTexture(const TImage* texture)
 {
 	m_state.SetTexture(texture);
+}
+
+void TRasterizer::SetSampleMode(TSampleMode mode)
+{
+	m_state.SetSampleMode(mode);
 }
 
 TRasterizer::TRasterizer(TRasterizer&& other) noexcept

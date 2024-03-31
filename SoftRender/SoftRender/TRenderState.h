@@ -24,7 +24,11 @@ public:
 
 	void SetBlend(bool enable);
 	bool IsBlendEnabled();
+
+	void SetSampleMode(TSampleMode mode);
+	TSampleMode GetSampleMode();
 private:
 	bool m_blendEnabled;
 	const TImage* m_texture;
+	TSampleMode m_sampleMode;
 };

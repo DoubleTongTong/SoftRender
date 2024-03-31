@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
+    <ClCompile Include="TBilinearUVRenderTask.cpp" />
     <ClCompile Include="TColor.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="IRenderTask.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="TBasicWindow.h" />
+    <ClInclude Include="TBilinearUVRenderTask.h" />
     <ClInclude Include="TColor.h" />
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
     <ClInclude Include="TImage.h" />

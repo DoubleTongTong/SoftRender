@@ -79,6 +79,12 @@
     <Filter Include="源文件\render_tasks\texture_uv">
       <UniqueIdentifier>{7c29dc80-3616-4315-b25b-b0cc390ac066}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\bilinear_uv">
+      <UniqueIdentifier>{1ec5dba9-5e2f-47de-9055-d6dd924a2193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\bilinear_uv">
+      <UniqueIdentifier>{e22e943e-c901-4392-add3-f07b25804a49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -116,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="TTextureUVRenderTask.cpp">
       <Filter>源文件\render_tasks\texture_uv</Filter>
+    </ClCompile>
+    <ClCompile Include="TBilinearUVRenderTask.cpp">
+      <Filter>源文件\render_tasks\bilinear_uv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="TTextureUVRenderTask.h">
       <Filter>头文件\render_tasks\texture_uv</Filter>
+    </ClInclude>
+    <ClInclude Include="TBilinearUVRenderTask.h">
+      <Filter>头文件\render_tasks\bilinear_uv</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
