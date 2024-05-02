@@ -91,6 +91,12 @@
     <Filter Include="源文件\render_tasks\wrap_mode">
       <UniqueIdentifier>{37c3214d-06fc-4a32-b094-7037bf5b4dc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\matrix_operations">
+      <UniqueIdentifier>{264cac86-c2e4-45db-a0ee-143a5de3630c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\matrix_operations">
+      <UniqueIdentifier>{0c022352-013e-4a14-ac79-339616c76ebe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -134,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="TWrapModeRenderTask.cpp">
       <Filter>源文件\render_tasks\wrap_mode</Filter>
+    </ClCompile>
+    <ClCompile Include="TMatrixOpsTask.cpp">
+      <Filter>源文件\render_tasks\matrix_operations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="TWrapModeRenderTask.h">
       <Filter>头文件\render_tasks\wrap_mode</Filter>
+    </ClInclude>
+    <ClInclude Include="TMatrix.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="TMatrixOpsTask.h">
+      <Filter>头文件\render_tasks\matrix_operations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

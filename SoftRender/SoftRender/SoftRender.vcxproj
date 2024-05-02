@@ -151,6 +151,7 @@
     <ClCompile Include="TColor.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
+    <ClCompile Include="TMatrixOpsTask.cpp" />
     <ClCompile Include="TRadialLinesRenderTask.cpp" />
     <ClCompile Include="TRandomDotRenderTask.cpp" />
     <ClCompile Include="TRasterizer.cpp" />
@@ -169,6 +170,8 @@
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
     <ClInclude Include="TImage.h" />
     <ClInclude Include="TImageDisplayTask.h" />
+    <ClInclude Include="TMatrix.h" />
+    <ClInclude Include="TMatrixOpsTask.h" />
     <ClInclude Include="TRadialLinesRenderTask.h" />
     <ClInclude Include="TRandomDotRenderTask.h" />
     <ClInclude Include="TRasterizer.h" />
