@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TMatrixOpsTask.h"
+#include "TViewTransformRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TMatrixOpsTask task;
+    TViewTransformRenderTask task(win);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

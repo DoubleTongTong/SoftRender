@@ -150,11 +150,13 @@ void TBasicWindow::CreateDrawResources(int width, int height)
 
 void TBasicWindow::UpdateFrame()
 {
+#if 0
     ULONGLONG currentTime = GetTickCount64();
     ULONGLONG deltaTime = currentTime - m_lastRenderTime;
 
     if (deltaTime >= FRAME_DURATION)
     {
+#endif
         // ÷¥––‰÷»æ»ŒŒÒ
         if (m_pRenderTask)
         {
@@ -162,9 +164,10 @@ void TBasicWindow::UpdateFrame()
 
             BitBlt(m_hDC, 0, 0, m_rz.GetWidth(), m_rz.GetHeight(), m_hMemDC, 0, 0, SRCCOPY);
         }
-
+#if 0
         m_lastRenderTime = currentTime;
     }
+#endif
 }
 
 void TBasicWindow::SetRenderTask(IRenderTask* renderTask)

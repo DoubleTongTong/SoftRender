@@ -97,6 +97,12 @@
     <Filter Include="源文件\render_tasks\matrix_operations">
       <UniqueIdentifier>{0c022352-013e-4a14-ac79-339616c76ebe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\view_transform">
+      <UniqueIdentifier>{92b3e067-6f44-4d25-b439-58a30c86b9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\view_transform">
+      <UniqueIdentifier>{77b0cb4c-a0eb-4103-8f87-0f39b9005b1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -143,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="TMatrixOpsTask.cpp">
       <Filter>源文件\render_tasks\matrix_operations</Filter>
+    </ClCompile>
+    <ClCompile Include="TViewTransformRenderTask.cpp">
+      <Filter>源文件\render_tasks\view_transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="TMatrixOpsTask.h">
       <Filter>头文件\render_tasks\matrix_operations</Filter>
+    </ClInclude>
+    <ClInclude Include="TViewTransformRenderTask.h">
+      <Filter>头文件\render_tasks\view_transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

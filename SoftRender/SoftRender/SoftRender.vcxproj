@@ -159,6 +159,7 @@
     <ClCompile Include="TTextureUVRenderTask.cpp" />
     <ClCompile Include="TVectorOpsRenderTask.cpp" />
     <ClCompile Include="TColorfulTriangleRenderTask.cpp" />
+    <ClCompile Include="TViewTransformRenderTask.cpp" />
     <ClCompile Include="TWrapModeRenderTask.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="TTextureUVRenderTask.h" />
     <ClInclude Include="TVector.h" />
     <ClInclude Include="TVectorOpsRenderTask.h" />
+    <ClInclude Include="TViewTransformRenderTask.h" />
     <ClInclude Include="TWrapModeRenderTask.h" />
   </ItemGroup>
   <ItemGroup>

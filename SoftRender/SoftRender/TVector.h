@@ -112,6 +112,20 @@ namespace tmath
 			return *this;
 		}
 
+		Vector& Normalize()
+		{
+			T norm = 0;
+			for (size_t i = 0; i < N; i++)
+				norm += elements[i] * elements[i];
+			norm = sqrt(norm);
+
+			assert(norm != 0);
+
+			for (size_t i = 0; i < N; i++)
+				elements[i] /= norm;
+
+			return *this;
+		}
 
 		std::string toString() const
 		{
@@ -159,7 +173,12 @@ namespace tmath
 		{
 		}
 
-		Vector3(T x, T y, T z) : Vector<T>({ x, y, z })
+		Vector3(T x, T y, T z) : Vector<T, 3>({ x, y, z })
+		{
+		}
+
+		Vector3(const Vector<T, 3>& v)
+			: Vector<T, 3>({ v[0], v[1], v[2]})
 		{
 		}
 
@@ -170,6 +189,34 @@ namespace tmath
 		const T& x() const { return Vector<T, 3>::elements[0]; }
 		const T& y() const { return Vector<T, 3>::elements[1]; }
 		const T& z() const { return Vector<T, 3>::elements[2]; }
+	};
+
+	template<typename T>
+	class Vector4 : public Vector<T, 4>
+	{
+	public:
+		Vector4() : Vector<T, 4>()
+		{
+		}
+
+		Vector4(T x, T y, T z, T w) : Vector<T, 4>({ x, y, z, w })
+		{
+		}
+
+		Vector4(const Vector<T, 4>& v)
+			: Vector<T, 4>({ v[0], v[1], v[2], v[3] })
+		{
+		}
+
+		T& x() { return Vector<T, 4>::elements[0]; }
+		T& y() { return Vector<T, 4>::elements[1]; }
+		T& z() { return Vector<T, 4>::elements[2]; }
+		T& w() { return Vector<T, 4>::elements[3]; }
+
+		const T& x() const { return Vector<T, 4>::elements[0]; }
+		const T& y() const { return Vector<T, 4>::elements[1]; }
+		const T& z() const { return Vector<T, 4>::elements[2]; }
+		const T& w() const { return Vector<T, 4>::elements[3]; }
 	};
 
 	template<typename T, size_t N>
@@ -210,6 +257,7 @@ namespace tmath
 	using Vec2i = Vector2<int>;
 	using Vec3f = Vector3<float>;
 	using Vec3i = Vector3<int>;
+	using Vec4f = Vector4<float>;
 	using Point2i = Vector2<int>;
 	using UV2f = Vector2<float>;
 }

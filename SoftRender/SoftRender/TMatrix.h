@@ -268,7 +268,105 @@ namespace tmath
 		}
 	};
 
+	template<typename T>
+	T degToRad(T degrees)
+	{
+		return degrees * (M_PI / 180.0);
+	}
 
+	template<typename T>
+	Matrix<T, 4, 4> TranslationMatrix(T tx, T ty, T tz)
+	{
+		return Matrix<T, 4, 4>({
+			1, 0, 0, tx,
+			0, 1, 0, ty,
+			0, 0, 1, tz,
+			0, 0, 0, 1
+			});
+	}
+
+	template<typename T>
+	Matrix<T, 4, 4> ScaleMatrix(T sx, T sy, T sz)
+	{
+		return Matrix<T, 4, 4>({
+			sx, 0,  0,  0,
+			0,  sy, 0,  0,
+			0,  0,  sz, 0,
+			0,  0,  0,  1
+			});
+	}
+
+	template<typename T>
+	Matrix<T, 4, 4> RotationMatrix(Vector3<T> axis, T angle_rad)
+	{
+		axis.Normalize();
+
+		T c = cos(angle_rad);
+		T s = sin(angle_rad);
+		T one_minus_c = 1 - c;
+
+		T x = axis.x(), y = axis.y(), z = axis.z();
+		return Matrix<T, 4, 4>({
+			x * x * one_minus_c + c, x * y * one_minus_c - z * s, x * z * one_minus_c + y * s, 0,
+			x * y * one_minus_c + z * s, y * y * one_minus_c + c, y * z * one_minus_c - x * s, 0,
+			x * z * one_minus_c - y * s, y * z * one_minus_c + x * s, z * z * one_minus_c + c, 0,
+			0, 0, 0, 1
+			});
+	}
+
+	template<typename T>
+	Matrix<T, 4, 4> OrthographicMatrix(T l, T r, T b, T t, T n, T f)
+	{
+		return Matrix<T, 4, 4>({
+			2 / (r - l), 0, 0, -(r + l) / (r - l),
+			0, 2 / (t - b), 0, -(t + b) / (t - b),
+			0, 0, 2 / (f - n), -(f + n) / (f - n),
+			0, 0, 0, 1
+			});
+	}
+
+	template<typename T>
+	Matrix<T, 4, 4> PerspectiveMatrix(T fov_rad, T aspect, T zNear, T zFar)
+	{
+		T y_scale = 1 / tan(fov_rad / 2);
+		T x_scale = y_scale / aspect;
+
+		return Matrix<T, 4, 4>({
+			x_scale, 0, 0, 0,
+			0, y_scale, 0, 0,
+			0, 0, (zFar + zNear) / (zFar - zNear), 2 * zNear * zFar / (zNear - zFar),
+			0, 0, -1, 0
+			});
+	}
+
+	template<typename T>
+	Matrix<T, 4, 4> LookAtMatrix(Vector3<T> eye, Vector3<T> center, Vector3<T> up)
+	{
+		Vector3<T> f = (center - eye).Normalize();
+		Vector3<T> r = cross(up, f).Normalize();
+		up = cross(f, r);
+
+		return Matrix<T, 4, 4>({
+			r.x(), r.y(), r.z(), -dot(r, eye),
+			up.x(), up.y(), up.z(), -dot(up, eye),
+			f.x(), f.y(), f.z(), -dot(f, eye),
+			0, 0, 0, 1
+			});
+	}
+
+	template<typename T>
+	Matrix<T, 4, 4> ScreenMatrix(int width, int height)
+	{
+		T halfWidth = static_cast<T>(width) / 2;
+		T halfHeight = static_cast<T>(height) / 2;
+
+		return Matrix<T, 4, 4>({
+			halfWidth, 0, 0, halfWidth,
+			0, -halfHeight, 0, halfHeight,
+			0, 0, 1, 0,
+			0, 0, 0, 1
+			});
+	}
 
 	using Mat4f = Matrix<float, 4, 4>;
 }
