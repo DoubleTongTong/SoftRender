@@ -1,7 +1,7 @@
 #pragma once
 #define NOMINMAX
 #include <Windows.h>
-#include "TRasterizer.h"
+#include "TSoftRenderer.h"
 #include "IRenderTask.h"
 
 class TBasicWindow
@@ -30,8 +30,11 @@ private:
 	HBITMAP m_hBitmap;
 	void*   m_pBits;    // 指向DIBSection数据的指针
 
-	TRasterizer  m_rz;
-	IRenderTask* m_pRenderTask;
+	TSoftRenderer m_sr;
+	IRenderTask*  m_pRenderTask;
+
+	int m_windowWidth;
+	int m_windowHeight;
 
 	ULONGLONG m_lastRenderTime;
 	const int TARGET_FPS = 30;

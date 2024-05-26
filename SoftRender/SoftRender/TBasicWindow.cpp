@@ -144,8 +144,11 @@ void TBasicWindow::CreateDrawResources(int width, int height)
 
     SelectObject(m_hMemDC, m_hBitmap);
 
-    m_rz = TRasterizer((uint32_t*)m_pBits, width, height);
-    m_rz.Clear(TRGBA(255, 0, 0));
+    m_windowWidth = width;
+    m_windowHeight = height;
+
+    m_sr.SetRasterizer((uint32_t*)m_pBits, width, height);
+    m_sr.Clear(TRGBA(255, 0, 0));
 }
 
 void TBasicWindow::UpdateFrame()
@@ -160,9 +163,9 @@ void TBasicWindow::UpdateFrame()
         // Ö´ÐÐäÖÈ¾ÈÎÎñ
         if (m_pRenderTask)
         {
-            m_pRenderTask->Render(m_rz);
+            m_pRenderTask->Render(m_sr);
 
-            BitBlt(m_hDC, 0, 0, m_rz.GetWidth(), m_rz.GetHeight(), m_hMemDC, 0, 0, SRCCOPY);
+            BitBlt(m_hDC, 0, 0, m_windowWidth, m_windowHeight, m_hMemDC, 0, 0, SRCCOPY);
         }
 #if 0
         m_lastRenderTime = currentTime;
@@ -177,10 +180,10 @@ void TBasicWindow::SetRenderTask(IRenderTask* renderTask)
 
 int TBasicWindow::GetWindowWidth()
 {
-    return m_rz.GetWidth();
+    return m_windowWidth;
 }
 
 int TBasicWindow::GetWindowHeight()
 {
-    return m_rz.GetHeight();
+    return m_windowHeight;
 }

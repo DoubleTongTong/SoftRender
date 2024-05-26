@@ -4,14 +4,15 @@
 #include <limits>
 
 TRasterizer::TRasterizer()
-	: TRasterizer(NULL, 0, 0)
+	: TRasterizer(NULL, 0, 0, NULL)
 {
 }
 
-TRasterizer::TRasterizer(uint32_t* pBits, int width, int height)
+TRasterizer::TRasterizer(uint32_t* pBits, int width, int height, TRenderState* m_state)
 	: m_pBits(pBits),
 	  m_width(width),
-	  m_height(height)
+	  m_height(height),
+	  m_state(m_state)
 {
 }
 
@@ -30,7 +31,7 @@ void TRasterizer::SetPixel(int x, int y, TRGBA color)
 	if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		return;
 
-	if (m_state.IsBlendEnabled())
+	if (m_state->IsBlendEnabled())
 		BlendPixel(x, y, color.r, color.g, color.b, color.a);
 	else
 		m_pBits[y * m_width + x] = color.ToBGR888();
@@ -41,7 +42,7 @@ void TRasterizer::SetPixel(int x, int y, BGRA* color)
 	if (x < 0 || x >= m_width || y < 0 || y >= m_height)
 		return;
 
-	if (m_state.IsBlendEnabled())
+	if (m_state->IsBlendEnabled())
 		BlendPixel(x, y, color->r, color->g, color->b, color->a);
 	else
 		m_pBits[y * m_width + x] = *reinterpret_cast<uint32_t*>(color);
@@ -215,7 +216,7 @@ void TRasterizer::DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p
 				uv.u() = uv1.u() * alpha + uv2.u() * beta + uv3.u() * gamma;
 				uv.v() = uv1.v() * alpha + uv2.v() * beta + uv3.v() * gamma;
 
-				switch (m_state.GetSampleMode())
+				switch (m_state->GetSampleMode())
 				{
 				case TSampleMode::Bilinear:
 					SetPixel(i, j, SampleTextureBilinear(uv));
@@ -262,7 +263,7 @@ void TRasterizer::BlendPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint
 BGRA* TRasterizer::SampleTextureNearest(const tmath::UV2f& uv)
 {
 	tmath::UV2f adjustedUV = AdjustUV(uv);
-	const TImage* texture = m_state.GetTexture();
+	const TImage* texture = m_state->GetTexture();
 
 	int w = texture->GetWidth();
 	int h = texture->GetHeight();
@@ -276,7 +277,7 @@ BGRA* TRasterizer::SampleTextureNearest(const tmath::UV2f& uv)
 TRGBA TRasterizer::SampleTextureBilinear(const tmath::UV2f& uv)
 {
 	tmath::UV2f adjustedUV = AdjustUV(uv);
-	const TImage* texture = m_state.GetTexture();
+	const TImage* texture = m_state->GetTexture();
 
 	int w = texture->GetWidth();
 	int h = texture->GetHeight();
@@ -306,7 +307,7 @@ TRGBA TRasterizer::SampleTextureBilinear(const tmath::UV2f& uv)
 
 tmath::UV2f TRasterizer::AdjustUV(const tmath::UV2f& uv)
 {
-	switch (m_state.GetWrapMode())
+	switch (m_state->GetWrapMode())
 	{
 	case TWrapMode::Mirror:
 		return {
@@ -332,31 +333,11 @@ void TRasterizer::Clear(TRGBA color)
 	}
 }
 
-void TRasterizer::SetBlend(bool enable)
-{
-	m_state.SetBlend(enable);
-}
-
-void TRasterizer::SetTexture(const TImage* texture)
-{
-	m_state.SetTexture(texture);
-}
-
-void TRasterizer::SetSampleMode(TSampleMode mode)
-{
-	m_state.SetSampleMode(mode);
-}
-
-void TRasterizer::SetWrapMode(TWrapMode mode)
-{
-	m_state.SetWrapMode(mode);
-}
-
 TRasterizer::TRasterizer(TRasterizer&& other) noexcept
 	: m_pBits(other.m_pBits),
 	  m_width(other.m_width),
 	  m_height(other.m_height),
-	  m_state()
+	  m_state(other.m_state)
 {
 }
 
@@ -367,6 +348,7 @@ TRasterizer& TRasterizer::operator=(TRasterizer&& other) noexcept
 		m_pBits = other.m_pBits;
 		m_width = other.m_width;
 		m_height = other.m_height;
+		m_state = other.m_state;
 	}
 
 	return *this;

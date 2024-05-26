@@ -16,7 +16,7 @@ class TViewTransformRenderTask : public IRenderTask
     float m_angle, m_cameraPos;
 public:
     TViewTransformRenderTask(TBasicWindow& win);
-    virtual void Render(TRasterizer& rz) override;
+    virtual void Render(TSoftRenderer& sr) override;
 
 private:
     void Transform();

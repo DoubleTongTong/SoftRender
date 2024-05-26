@@ -4,5 +4,5 @@
 class TColorfulTriangleRenderTask : public IRenderTask
 {
 public:
-    virtual void Render(TRasterizer& rz) override;
+    virtual void Render(TSoftRenderer& sr) override;
 };

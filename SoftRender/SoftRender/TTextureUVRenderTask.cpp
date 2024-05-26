@@ -26,10 +26,10 @@ TTextureUVRenderTask::TTextureUVRenderTask(TBasicWindow& win)
 	uv4 = tmath::UV2f(1.0f, 1.0f);
 }
 
-void TTextureUVRenderTask::Render(TRasterizer& rz)
+void TTextureUVRenderTask::Render(TSoftRenderer& sr)
 {
-	rz.SetTexture(&m_texture);
+	sr.SetTexture(&m_texture);
 
-	rz.DrawTriangle(p1, p2, p3, uv1, uv2, uv3);
-	rz.DrawTriangle(p2, p3, p4, uv2, uv3, uv4);
+	sr.DrawTriangle(p1, p2, p3, uv1, uv2, uv3);
+	sr.DrawTriangle(p2, p3, p4, uv2, uv3, uv4);
 }

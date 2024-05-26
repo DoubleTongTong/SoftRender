@@ -10,5 +10,5 @@ class TBilinearUVRenderTask : public IRenderTask
     tmath::UV2f uv1, uv2, uv3, uv4;
 public:
     TBilinearUVRenderTask(TBasicWindow& win);
-    virtual void Render(TRasterizer& rz) override;
+    virtual void Render(TSoftRenderer& sr) override;
 };

@@ -7,5 +7,5 @@ class TWrapModeRenderTask : public IRenderTask
     TWrapMode m_wrapMode;
 public:
     TWrapModeRenderTask(TWrapMode mode);
-    virtual void Render(TRasterizer& rz) override;
+    virtual void Render(TSoftRenderer& sr) override;
 };

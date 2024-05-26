@@ -77,13 +77,13 @@ void TViewTransformRenderTask::Transform()
 	}
 }
 
-void TViewTransformRenderTask::Render(TRasterizer& rz)
+void TViewTransformRenderTask::Render(TSoftRenderer& sr)
 {
 	Transform();
-	rz.Clear({ 0,0,0 });
+	sr.Clear({ 0,0,0 });
 	for (int i = 0; i < 12; i++)
 	{
-		rz.DrawTriangle(m_screenPoints[3 * i], m_screenPoints[3 * i + 1], m_screenPoints[3 * i + 2],
+		sr.DrawTriangle(m_screenPoints[3 * i], m_screenPoints[3 * i + 1], m_screenPoints[3 * i + 2],
 			{ 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 });
 	}
 }

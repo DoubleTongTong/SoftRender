@@ -1,12 +1,12 @@
 #include "TColorfulTriangleRenderTask.h"
 
-void TColorfulTriangleRenderTask::Render(TRasterizer& rz)
+void TColorfulTriangleRenderTask::Render(TSoftRenderer& sr)
 {
-	int centerX = rz.GetWidth() / 2;
-	int centerY = rz.GetHeight() / 2;
+	int centerX = sr.GetRenderWidth() / 2;
+	int centerY = sr.GetRenderHeight() / 2;
 
-	rz.Clear(TRGBA(0, 0, 0));
+	sr.Clear(TRGBA(0, 0, 0));
 
-	rz.DrawTriangle({ centerX, 0 }, { 0, rz.GetHeight() }, { rz.GetWidth(), rz.GetHeight() },
+	sr.DrawTriangle({ centerX, 0 }, { 0, sr.GetRenderHeight() }, { sr.GetRenderWidth(), sr.GetRenderHeight() },
 		TRGBA(255, 0, 0), TRGBA(0, 255, 0), TRGBA(0, 0, 255));
 }

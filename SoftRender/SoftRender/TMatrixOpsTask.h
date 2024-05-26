@@ -5,5 +5,5 @@ class TMatrixOpsTask : public IRenderTask
 {
 public:
     TMatrixOpsTask();
-    virtual void Render(TRasterizer& rz) override;
+    virtual void Render(TSoftRenderer& sr) override;
 };

@@ -1,7 +1,7 @@
 #include "TVectorOpsRenderTask.h"
 #include "TVector.h"
 
-void TVectorOpsRenderTask::Render(TRasterizer& rz)
+void TVectorOpsRenderTask::Render(TSoftRenderer& sr)
 {
 	tmath::Vec2f vec1(1.0f, 2.0f);
 	tmath::Vec2f vec2(3.0f, 4.0f);

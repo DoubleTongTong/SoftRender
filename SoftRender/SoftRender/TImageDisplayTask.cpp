@@ -6,17 +6,17 @@ TImageDisplayTask::TImageDisplayTask()
 {
 }
 
-void TImageDisplayTask::Render(TRasterizer& rz)
+void TImageDisplayTask::Render(TSoftRenderer& sr)
 {
-	rz.SetBlend(false);
-	rz.DrawImage(m_img, 0, 0);
-	rz.DrawImage(m_image_png, 0, m_img.GetHeight());
-	rz.DrawImage(m_img, 0, m_img.GetHeight() + m_image_png.GetWidth());
-	rz.DrawImage(m_image_png, 0, m_img.GetHeight() + m_image_png.GetWidth());
+	sr.SetBlend(false);
+	sr.DrawImage(m_img, 0, 0);
+	sr.DrawImage(m_image_png, 0, m_img.GetHeight());
+	sr.DrawImage(m_img, 0, m_img.GetHeight() + m_image_png.GetWidth());
+	sr.DrawImage(m_image_png, 0, m_img.GetHeight() + m_image_png.GetWidth());
 
-	rz.SetBlend(true);
-	rz.DrawImage(m_img, m_img.GetWidth(), 0);
-	rz.DrawImage(m_image_png, m_image_png.GetWidth(), m_img.GetHeight());
-	rz.DrawImage(m_img, m_img.GetWidth(), m_img.GetHeight() + m_image_png.GetWidth());
-	rz.DrawImage(m_image_png, m_img.GetWidth(), m_img.GetHeight() + m_image_png.GetWidth());
+	sr.SetBlend(true);
+	sr.DrawImage(m_img, m_img.GetWidth(), 0);
+	sr.DrawImage(m_image_png, m_image_png.GetWidth(), m_img.GetHeight());
+	sr.DrawImage(m_img, m_img.GetWidth(), m_img.GetHeight() + m_image_png.GetWidth());
+	sr.DrawImage(m_image_png, m_img.GetWidth(), m_img.GetHeight() + m_image_png.GetWidth());
 }

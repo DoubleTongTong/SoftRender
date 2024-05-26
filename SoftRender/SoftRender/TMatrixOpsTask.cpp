@@ -23,7 +23,7 @@ TMatrixOpsTask::TMatrixOpsTask()
 #endif
 }
 
-void TMatrixOpsTask::Render(TRasterizer& rz)
+void TMatrixOpsTask::Render(TSoftRenderer& sr)
 {
 
 }

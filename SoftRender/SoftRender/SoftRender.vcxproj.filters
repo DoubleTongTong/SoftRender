@@ -153,6 +153,9 @@
     <ClCompile Include="TViewTransformRenderTask.cpp">
       <Filter>源文件\render_tasks\view_transform</Filter>
     </ClCompile>
+    <ClCompile Include="TSoftRenderer.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TBasicWindow.h">
@@ -211,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="TViewTransformRenderTask.h">
       <Filter>头文件\render_tasks\view_transform</Filter>
+    </ClInclude>
+    <ClInclude Include="TSoftRenderer.h">
+      <Filter>头文件\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

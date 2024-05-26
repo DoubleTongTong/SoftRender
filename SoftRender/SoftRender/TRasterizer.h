@@ -8,7 +8,7 @@ class TRasterizer
 {
 public:
 	TRasterizer();
-	TRasterizer(uint32_t* pBits, int width, int height);
+	TRasterizer(uint32_t* pBits, int width, int height, TRenderState* m_state);
 
 	int GetWidth() const;
 	int GetHeight() const;
@@ -23,16 +23,12 @@ public:
 	void DrawImage(const TImage& image, int startX, int startY);
 	void Clear(TRGBA color);
 
-	void SetBlend(bool enable);
-	void SetTexture(const TImage* texture);
-	void SetSampleMode(TSampleMode mode);
-	void SetWrapMode(TWrapMode mode);
 private:
 	uint32_t* m_pBits;  // raw pixel data
 	int       m_width;
 	int       m_height;
 
-	TRenderState m_state;
+	TRenderState* m_state;
 
 private:
 	void DrawLineDifferential(int x1, int y1, int x2, int y2);

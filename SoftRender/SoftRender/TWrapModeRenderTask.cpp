@@ -6,13 +6,13 @@ TWrapModeRenderTask::TWrapModeRenderTask(TWrapMode mode)
 {
 }
 
-void TWrapModeRenderTask::Render(TRasterizer& rz)
+void TWrapModeRenderTask::Render(TSoftRenderer& sr)
 {
 	int width = m_texture.GetWidth();
 	int height = m_texture.GetHeight();
 
-	rz.SetTexture(&m_texture);
-	rz.SetWrapMode(m_wrapMode);
+	sr.SetTexture(&m_texture);
+	sr.SetWrapMode(m_wrapMode);
 
 	for (int row = 0; row < 3; row++)
 	{
@@ -28,8 +28,8 @@ void TWrapModeRenderTask::Render(TRasterizer& rz)
 
 		for (int i = 0; i < 3; i++)
 		{
-			rz.DrawTriangle(p1, p2, p3, uv1, uv2, uv3);
-			rz.DrawTriangle(p2, p3, p4, uv2, uv3, uv4);
+			sr.DrawTriangle(p1, p2, p3, uv1, uv2, uv3);
+			sr.DrawTriangle(p2, p3, p4, uv2, uv3, uv4);
 
 			p1.x() += width;
 			p2.x() += width;
