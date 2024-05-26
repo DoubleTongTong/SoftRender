@@ -178,6 +178,11 @@ void TBasicWindow::SetRenderTask(IRenderTask* renderTask)
     m_pRenderTask = renderTask;
 }
 
+TSoftRenderer& TBasicWindow::GetRenderer()
+{
+    return m_sr;
+}
+
 int TBasicWindow::GetWindowWidth()
 {
     return m_windowWidth;

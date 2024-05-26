@@ -148,6 +148,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TBilinearUVRenderTask.cpp" />
+    <ClCompile Include="TBufferObject.cpp" />
     <ClCompile Include="TColor.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
@@ -158,8 +159,10 @@
     <ClCompile Include="TRenderState.cpp" />
     <ClCompile Include="TSoftRenderer.cpp" />
     <ClCompile Include="TTextureUVRenderTask.cpp" />
+    <ClCompile Include="TTriangleOGLPipelineRenderTask.cpp" />
     <ClCompile Include="TVectorOpsRenderTask.cpp" />
     <ClCompile Include="TColorfulTriangleRenderTask.cpp" />
+    <ClCompile Include="TVertexArrayObject.cpp" />
     <ClCompile Include="TViewTransformRenderTask.cpp" />
     <ClCompile Include="TWrapModeRenderTask.cpp" />
   </ItemGroup>
@@ -168,6 +171,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TBilinearUVRenderTask.h" />
+    <ClInclude Include="TBufferObject.h" />
     <ClInclude Include="TColor.h" />
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
     <ClInclude Include="TImage.h" />
@@ -180,8 +184,10 @@
     <ClInclude Include="TRenderState.h" />
     <ClInclude Include="TSoftRenderer.h" />
     <ClInclude Include="TTextureUVRenderTask.h" />
+    <ClInclude Include="TTriangleOGLPipelineRenderTask.h" />
     <ClInclude Include="TVector.h" />
     <ClInclude Include="TVectorOpsRenderTask.h" />
+    <ClInclude Include="TVertexArrayObject.h" />
     <ClInclude Include="TViewTransformRenderTask.h" />
     <ClInclude Include="TWrapModeRenderTask.h" />
   </ItemGroup>

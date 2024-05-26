@@ -103,6 +103,12 @@
     <Filter Include="源文件\render_tasks\view_transform">
       <UniqueIdentifier>{77b0cb4c-a0eb-4103-8f87-0f39b9005b1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\ogl_pipeline">
+      <UniqueIdentifier>{e033b9c4-fed7-4e81-a270-d4a971db71f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\ogl_pipeline">
+      <UniqueIdentifier>{518c71e5-8f93-4918-a3ef-1628422d4339}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -155,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="TSoftRenderer.cpp">
       <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TBufferObject.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TVertexArrayObject.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TTriangleOGLPipelineRenderTask.cpp">
+      <Filter>源文件\render_tasks\ogl_pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +232,15 @@
     </ClInclude>
     <ClInclude Include="TSoftRenderer.h">
       <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TBufferObject.h">
+      <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TVertexArrayObject.h">
+      <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TTriangleOGLPipelineRenderTask.h">
+      <Filter>头文件\render_tasks\ogl_pipeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

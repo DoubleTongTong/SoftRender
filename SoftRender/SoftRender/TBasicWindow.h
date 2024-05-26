@@ -14,6 +14,7 @@ public:
 	~TBasicWindow();
 	void RunMessageLoop();
 	void SetRenderTask(IRenderTask* renderTask);
+	TSoftRenderer& GetRenderer();
 
 	int GetWindowWidth();
 	int GetWindowHeight();

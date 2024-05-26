@@ -1,6 +1,8 @@
 #include "TSoftRenderer.h"
 
 TSoftRenderer::TSoftRenderer()
+	: m_nextBufferId(0),
+	  m_nextVaoId(0)
 {
 }
 
@@ -69,4 +71,160 @@ void TSoftRenderer::SetSampleMode(TSampleMode mode)
 void TSoftRenderer::SetWrapMode(TWrapMode mode)
 {
 	m_state.SetWrapMode(mode);
+}
+
+uint32_t TSoftRenderer::AllocateBufferId()
+{
+	if (m_freeBufferIds.empty())
+	{
+		return ++m_nextBufferId;
+	}
+	else
+	{
+		uint32_t id = m_freeBufferIds.front();
+		m_freeBufferIds.pop();
+		return id;
+	}
+}
+
+uint32_t TSoftRenderer::AllocateVaoId()
+{
+	if (m_freeVaoIds.empty())
+		return ++m_nextVaoId;
+	else
+	{
+		uint32_t id = m_freeVaoIds.front();
+		m_freeVaoIds.pop();
+		return id;
+	}
+}
+
+void TSoftRenderer::GenBuffers(uint32_t n, uint32_t* buffers)
+{
+	for (uint32_t i = 0; i < n; i++)
+	{
+		uint32_t id = AllocateBufferId();
+		m_bufferMap[id] = new TBufferObject(id);
+		buffers[i] = id;
+	}
+}
+
+void TSoftRenderer::DeleteBuffers(uint32_t n, uint32_t* buffers)
+{
+	for (uint32_t i = 0; i < n; i++)
+	{
+		uint32_t id = buffers[i];
+		auto it = m_bufferMap.find(id);
+		if (it != m_bufferMap.end())
+		{
+			delete it->second;
+			m_bufferMap.erase(it);
+			m_freeBufferIds.push(id);
+		}
+	}
+}
+
+void TSoftRenderer::GenVertexArrays(uint32_t n, uint32_t* arrays)
+{
+	for (uint32_t i = 0; i < n; i++)
+	{
+		uint32_t id = AllocateVaoId();
+		m_vaoMap[id] = new TVertexArrayObject(id);
+		arrays[i] = id;
+	}
+}
+
+void TSoftRenderer::DeleteVertexArrays(uint32_t n, uint32_t* arrays)
+{
+	for (uint32_t i = 0; i < n; i++)
+	{
+		uint32_t id = arrays[i];
+		auto it = m_vaoMap.find(id);
+		if (it != m_vaoMap.end())
+		{
+			delete it->second;
+			m_vaoMap.erase(it);
+			m_freeVaoIds.push(id);
+		}
+	}
+}
+
+void TSoftRenderer::BindBuffer(TBufferType target, uint32_t buffer)
+{
+	TBufferObject* bufferPtr = NULL;
+	if (buffer != 0)
+	{
+		auto it = m_bufferMap.find(buffer);
+		assert(it != m_bufferMap.end());
+
+		bufferPtr = it->second;
+	}
+
+	switch (target)
+	{
+	case TBufferType::ArrayBuffer:
+		m_currentArrayBuffer = bufferPtr;
+		break;
+	case TBufferType::ElementArrayBuffer:
+		m_currentElementBuffer = bufferPtr;
+		break;
+	default:
+		assert(0);
+		break;
+	}
+}
+
+void TSoftRenderer::BufferData(TBufferType target, uint32_t size, void* data)
+{
+	TBufferObject* buffer = NULL;
+
+	switch (target)
+	{
+	case TBufferType::ArrayBuffer:
+		buffer = m_currentArrayBuffer;
+		break;
+	case TBufferType::ElementArrayBuffer:
+		buffer = m_currentElementBuffer;
+		break;
+	default:
+		break;
+	}
+
+	assert(buffer != NULL);
+	buffer->SetBufferData(size, data);
+}
+
+void TSoftRenderer::BindVertexArray(uint32_t array)
+{
+	if (array == 0)
+		m_currentVertexArray = NULL;
+	else
+	{
+		auto it = m_vaoMap.find(array);
+		assert(it != m_vaoMap.end());
+		m_currentVertexArray = it->second;
+	}
+}
+
+void TSoftRenderer::VertexAttribPointer(
+	uint32_t index,
+	uint32_t count,
+#if 0
+	TAttributeType type,
+#endif
+	uint32_t stride,
+	uint32_t offset)
+{
+	assert(m_currentVertexArray != NULL);
+	assert(m_currentArrayBuffer != NULL);
+
+	TVertexAttribute attr(TAttributeType::Float, count, stride, offset);
+	m_currentVertexArray->AddVertexAttribBinding(index, m_currentArrayBuffer, attr);
+}
+
+void TSoftRenderer::PrintVAO(uint32_t vao)
+{
+	auto it = m_vaoMap.find(vao);
+	assert(it != m_vaoMap.end());
+	it->second->Print();
 }
