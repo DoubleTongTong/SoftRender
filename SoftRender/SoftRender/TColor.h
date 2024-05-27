@@ -1,5 +1,5 @@
 #pragma once
-#include <stdint.h>
+#include "TVector.h"
 
 struct BGRA
 {
@@ -24,4 +24,6 @@ public:
 	static TRGBA Interpolate(const TRGBA& color1, float w1,
 		const TRGBA& color2, float w2,
 		const TRGBA& color3, float w3);
+
+	static TRGBA FromVec4f(const tmath::Vec4f& color);
 };

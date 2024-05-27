@@ -2,13 +2,17 @@
 
 TSoftRenderer::TSoftRenderer()
 	: m_nextBufferId(0),
-	  m_nextVaoId(0)
+	  m_nextVaoId(0),
+	  m_currentArrayBuffer(NULL),
+	  m_currentElementBuffer(NULL),
+	  m_currentVertexArray(NULL)
 {
 }
 
 void TSoftRenderer::SetRasterizer(uint32_t* pBits, int width, int height)
 {
 	m_rz = TRasterizer(pBits, width, height, &m_state);
+	m_screenMatrix = tmath::ScreenMatrix<float>(width, height);
 }
 
 int TSoftRenderer::GetRenderWidth()
@@ -227,4 +231,67 @@ void TSoftRenderer::PrintVAO(uint32_t vao)
 	auto it = m_vaoMap.find(vao);
 	assert(it != m_vaoMap.end());
 	it->second->Print();
+}
+
+void TSoftRenderer::UseProgram(TShader* shader)
+{
+	m_currentShader = shader;
+}
+
+int TSoftRenderer::GetPrimitiveCount(TDrawMode mode)
+{
+	switch (mode)
+	{
+	case TDrawMode::Triangles:
+		return 3;
+	case TDrawMode::Lines:
+		return 2;
+	default:
+		assert(0);
+		return 0;
+	}
+}
+
+void TSoftRenderer::DrawElements(
+	TDrawMode mode,
+	uint32_t size,
+#if 0
+	TIndexDataType type,
+#endif
+	uint32_t offset)
+{
+	uint32_t* indexData = (uint32_t*)(m_currentElementBuffer->GetBufferData() + offset);
+
+	FragmentShaderFunction fragFunc = std::bind(&TShader::FragmentShader, m_currentShader, std::placeholders::_1, std::placeholders::_2);
+	TShaderContext context(m_currentVertexArray);
+	TVertexShaderOutput vertexOutputs[3];
+	int primitive = GetPrimitiveCount(mode);
+
+	for (uint32_t i = 0; i < size; i += primitive)
+	{
+		for (uint32_t j = 0; j < primitive; j++)
+		{
+			context.SetVertexIndex(indexData[i + j]);
+
+			// VertexShader
+			m_currentShader->VertexShader(context, vertexOutputs[j]);
+
+			// 透视除法
+			vertexOutputs[j].position /= vertexOutputs[j].position.w();
+
+			// NDC - 屏幕
+			vertexOutputs[j].position = m_screenMatrix * vertexOutputs[j].position;
+		}
+
+		switch (mode)
+		{
+		case TDrawMode::Triangles:
+			m_rz.RasterizeTriangle(vertexOutputs[0], vertexOutputs[1], vertexOutputs[2], fragFunc);
+			break;
+		case TDrawMode::Lines:
+		default:
+			assert(0);
+			break;
+		}
+	}
 }

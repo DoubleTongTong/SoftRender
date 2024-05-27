@@ -1,6 +1,7 @@
 #include "TTriangleOGLPipelineRenderTask.h"
 
 TTriangleOGLPipelineRenderTask::TTriangleOGLPipelineRenderTask(TBasicWindow& win)
+    : m_angle(0)
 {
     float vertices[] = {
         -0.5f, -0.5f, 0.0f,
@@ -50,9 +51,30 @@ TTriangleOGLPipelineRenderTask::TTriangleOGLPipelineRenderTask(TBasicWindow& win
     sr.BufferData(TBufferType::ElementArrayBuffer, sizeof(indices), indices);
 
     sr.PrintVAO(vao);
+
+    ////
+    int width = win.GetWindowWidth();
+    int height = win.GetWindowHeight();
+
+    float aspect = (float)width / height;
+
+    m_shader.projectionMatrix = tmath::PerspectiveMatrix(tmath::degToRad(60.0f), aspect, 0.1f, 100.0f);
+    m_shader.viewMatrix = tmath::TranslationMatrix(0.0f, 0.0f, 3.0f);
+
+    sr.UseProgram(&m_shader);
 }
 
 void TTriangleOGLPipelineRenderTask::Render(TSoftRenderer& sr)
 {
+    Transform();
 
+    sr.Clear({ 0,0,0 });
+
+    sr.DrawElements(TDrawMode::Triangles, 3, 0);
+}
+
+void TTriangleOGLPipelineRenderTask::Transform()
+{
+    m_angle -= 0.01f;
+    m_shader.modelMatrix = tmath::RotationMatrix(tmath::Vec3f(0.0f, 1.0f, 0.0f), m_angle);
 }

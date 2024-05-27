@@ -334,8 +334,8 @@ namespace tmath
 		return Matrix<T, 4, 4>({
 			x_scale, 0, 0, 0,
 			0, y_scale, 0, 0,
-			0, 0, (zFar + zNear) / (zFar - zNear), 2 * zNear * zFar / (zNear - zFar),
-			0, 0, -1, 0
+			0, 0, (zFar + zNear) / (zFar - zNear), -2 * zNear * zFar / (zFar - zNear),
+			0, 0, 1, 0
 			});
 	}
 

@@ -3,6 +3,7 @@
 #include "TVector.h"
 #include "TImage.h"
 #include "TRenderState.h"
+#include "TShader.h"
 
 class TRasterizer
 {
@@ -22,6 +23,12 @@ public:
 		const tmath::UV2f& uv1, const tmath::UV2f& uv2, const tmath::UV2f& uv3);
 	void DrawImage(const TImage& image, int startX, int startY);
 	void Clear(TRGBA color);
+
+	void RasterizeTriangle(
+		const TVertexShaderOutput& v1,
+		const TVertexShaderOutput& v2,
+		const TVertexShaderOutput& v3,
+		FragmentShaderFunction fragShader);
 
 private:
 	uint32_t* m_pBits;  // raw pixel data

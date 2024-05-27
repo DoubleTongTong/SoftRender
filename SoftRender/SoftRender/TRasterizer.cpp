@@ -353,3 +353,65 @@ TRasterizer& TRasterizer::operator=(TRasterizer&& other) noexcept
 
 	return *this;
 }
+
+void TRasterizer::RasterizeTriangle(
+	const TVertexShaderOutput& v1,
+	const TVertexShaderOutput& v2,
+	const TVertexShaderOutput& v3,
+	FragmentShaderFunction fragShader)
+{
+	const tmath::Vec2i p1 = { (int)v1.position.x(), (int)v1.position.y() };
+	const tmath::Vec2i p2 = { (int)v2.position.x(), (int)v2.position.y() };
+	const tmath::Vec2i p3 = { (int)v3.position.x(), (int)v3.position.y() };
+
+	int minX = std::min(p1.x(), std::min(p2.x(), p3.x()));
+	int maxX = std::max(p1.x(), std::max(p2.x(), p3.x()));
+	int minY = std::min(p1.y(), std::min(p2.y(), p3.y()));
+	int maxY = std::max(p1.y(), std::max(p2.y(), p3.y()));
+
+	tmath::Vec2i p, pp1, pp2, pp3;
+	int c1, c2, c3;
+	float alpha, beta, gamma;
+	float area = (float)std::abs(tmath::cross(p2 - p1, p3 - p1));
+
+	TFragmentShaderOutput fragOutput;
+	TVertexShaderOutput interpolatedInput;
+
+	for (int i = minX; i <= maxX; i++)
+	{
+		p.x() = i;
+		for (int j = minY; j <= maxY; j++)
+		{
+			p.y() = j;
+
+			pp1.x() = p1.x() - p.x(); pp1.y() = p1.y() - p.y(); // pp1 = p1 - p;
+			pp2.x() = p2.x() - p.x(); pp2.y() = p2.y() - p.y(); // pp2 = p2 - p;
+			pp3.x() = p3.x() - p.x(); pp3.y() = p3.y() - p.y(); // pp3 = p3 - p;
+
+			c1 = tmath::cross(pp1, pp2);
+			c2 = tmath::cross(pp2, pp3);
+			c3 = tmath::cross(pp3, pp1);
+
+			if ((c1 >= 0 && c2 >= 0 && c3 >= 0) ||
+				(c1 <= 0 && c2 <= 0 && c3 <= 0))
+			{
+				alpha = std::abs(c2) / area;
+				beta = std::abs(c3) / area;
+				gamma = std::abs(c1) / area;
+
+				if (v1.useColor)
+				{
+					interpolatedInput.color = tmath::interpolate(
+						v1.color, alpha,
+						v2.color, beta,
+						v3.color, gamma
+					);
+
+					fragShader(interpolatedInput, fragOutput);
+
+					SetPixel(i, j, TRGBA::FromVec4f(fragOutput.color));
+				}
+			}
+		}
+	}
+}

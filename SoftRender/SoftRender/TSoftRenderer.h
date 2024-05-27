@@ -3,6 +3,7 @@
 #include "TRasterizer.h"
 #include "TBufferObject.h"
 #include "TVertexArrayObject.h"
+#include "TShader.h"
 #include <unordered_map>
 #include <queue>
 
@@ -43,6 +44,19 @@ public:
 	/* Debug */
 	void PrintVAO(uint32_t vao);
 
+	void UseProgram(TShader* shader);
+
+	/**
+	 * 简化处理，该函数默认所有数据类型为 `uint32`。
+	 */
+	void DrawElements(
+		TDrawMode mode,
+		uint32_t size,
+#if 0
+		TIndexDataType type,
+#endif
+		uint32_t offset);
+
 private:
 	TRenderState m_state;
 	TRasterizer  m_rz;
@@ -62,9 +76,15 @@ private:
 	TBufferObject*      m_currentArrayBuffer;
 	TBufferObject*      m_currentElementBuffer;
 
+	/* Shader */
+	TShader* m_currentShader;
+
+	tmath::Mat4f m_screenMatrix;
 private:
 	uint32_t AllocateBufferId();
 	uint32_t AllocateVaoId();
+
+	int GetPrimitiveCount(TDrawMode mode);
 
 public:
 	TSoftRenderer(TSoftRenderer&& other) noexcept = default;

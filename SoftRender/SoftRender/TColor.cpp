@@ -41,3 +41,13 @@ TRGBA TRGBA::Interpolate(const TRGBA& color1, float w1,
 		(uint8_t)(color1.b * w1 + color2.b * w2 + color3.b * w3)
 	);
 }
+
+TRGBA TRGBA::FromVec4f(const tmath::Vec4f& color)
+{
+	return TRGBA(
+		(uint8_t)(color.x() * 255),
+		(uint8_t)(color.y() * 255),
+		(uint8_t)(color.z() * 255),
+		(uint8_t)(color.w() * 255)
+	);
+}

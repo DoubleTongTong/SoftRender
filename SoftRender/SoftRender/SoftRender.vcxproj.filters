@@ -171,6 +171,9 @@
     <ClCompile Include="TTriangleOGLPipelineRenderTask.cpp">
       <Filter>源文件\render_tasks\ogl_pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="TShader.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TBasicWindow.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="TTriangleOGLPipelineRenderTask.h">
       <Filter>头文件\render_tasks\ogl_pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="TShader.h">
+      <Filter>头文件\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -208,6 +208,11 @@ namespace tmath
 		{
 		}
 
+		Vector4(const Vector<T, 3>& vec3, T w)
+			: Vector<T, 4>({ vec3[0], vec3[1], vec3[2], w })
+		{
+		}
+
 		T& x() { return Vector<T, 4>::elements[0]; }
 		T& y() { return Vector<T, 4>::elements[1]; }
 		T& z() { return Vector<T, 4>::elements[2]; }
@@ -251,6 +256,17 @@ namespace tmath
 			a.z() * b.x() - a.x() * b.z(),
 			a.x() * b.y() - a.y() * b.x()
 			);
+	}
+
+	template<typename T, size_t N>
+	Vector<T, N> interpolate(const Vector<T, N>& v1, T weight1, const Vector<T, N>& v2, T weight2, const Vector<T, N>& v3, T weight3)
+	{
+		Vector<T, N> result;
+		for (size_t i = 0; i < N; i++)
+		{
+			result[i] = v1[i] * weight1 + v2[i] * weight2 + v3[i] * weight3;
+		}
+		return result;
 	}
 
 	using Vec2f = Vector2<float>;

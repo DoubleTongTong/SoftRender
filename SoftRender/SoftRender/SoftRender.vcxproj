@@ -157,6 +157,7 @@
     <ClCompile Include="TRandomDotRenderTask.cpp" />
     <ClCompile Include="TRasterizer.cpp" />
     <ClCompile Include="TRenderState.cpp" />
+    <ClCompile Include="TShader.cpp" />
     <ClCompile Include="TSoftRenderer.cpp" />
     <ClCompile Include="TTextureUVRenderTask.cpp" />
     <ClCompile Include="TTriangleOGLPipelineRenderTask.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="TRandomDotRenderTask.h" />
     <ClInclude Include="TRasterizer.h" />
     <ClInclude Include="TRenderState.h" />
+    <ClInclude Include="TShader.h" />
     <ClInclude Include="TSoftRenderer.h" />
     <ClInclude Include="TTextureUVRenderTask.h" />
     <ClInclude Include="TTriangleOGLPipelineRenderTask.h" />
