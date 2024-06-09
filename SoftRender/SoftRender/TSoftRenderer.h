@@ -86,6 +86,15 @@ private:
 
 	int GetPrimitiveCount(TDrawMode mode);
 
+	void SutherlandHodgmanClipTriangle(
+		const TVertexShaderOutput vertexOutputs[3],
+		std::vector<TVertexShaderOutput>& clipped);
+
+	void ClipPolygonAgainstBoundary(
+		const std::vector<TVertexShaderOutput>& vertices,
+		std::vector<TVertexShaderOutput>& outVertices,
+		const tmath::Vec4f& boundary);
+
 public:
 	TSoftRenderer(TSoftRenderer&& other) noexcept = default;
 	TSoftRenderer& operator=(TSoftRenderer&& other) = default;

@@ -38,6 +38,10 @@ struct TVertexShaderOutput
 
 	bool useUV;
 	tmath::Vec2f uv;
+
+private:
+	friend class TSoftRenderer;
+	TVertexShaderOutput Lerp(const TVertexShaderOutput& other, float t) const;
 };
 
 struct TFragmentShaderOutput

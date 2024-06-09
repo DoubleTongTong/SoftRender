@@ -109,6 +109,12 @@
     <Filter Include="源文件\render_tasks\ogl_pipeline">
       <UniqueIdentifier>{518c71e5-8f93-4918-a3ef-1628422d4339}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\clipping">
+      <UniqueIdentifier>{608d97f5-3cc9-4224-81bf-f11b3935c37f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\clipping">
+      <UniqueIdentifier>{cf861357-ddd9-4d59-8e68-a4b9fa645ef3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -173,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="TShader.cpp">
       <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TClippingRenderTask.cpp">
+      <Filter>源文件\render_tasks\clipping</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="TShader.h">
       <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TClippingRenderTask.h">
+      <Filter>头文件\render_tasks\clipping</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

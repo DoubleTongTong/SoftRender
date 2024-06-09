@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TTriangleOGLPipelineRenderTask.h"
+#include "TClippingRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TTriangleOGLPipelineRenderTask task(win);
+    TClippingRenderTask task(win);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

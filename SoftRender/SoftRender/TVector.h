@@ -154,6 +154,11 @@ namespace tmath
 		{
 		}
 
+		Vector2(const Vector<T, 2>& v)
+			: Vector<T, 2>({ v[0], v[1] })
+		{
+		}
+
 		T& x() { return Vector<T, 2>::elements[0]; }
 		T& y() { return Vector<T, 2>::elements[1]; }
 		const T& x() const { return Vector<T, 2>::elements[0]; }

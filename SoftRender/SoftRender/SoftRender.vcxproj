@@ -149,6 +149,7 @@
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TBilinearUVRenderTask.cpp" />
     <ClCompile Include="TBufferObject.cpp" />
+    <ClCompile Include="TClippingRenderTask.cpp" />
     <ClCompile Include="TColor.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TBilinearUVRenderTask.h" />
     <ClInclude Include="TBufferObject.h" />
+    <ClInclude Include="TClippingRenderTask.h" />
     <ClInclude Include="TColor.h" />
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
     <ClInclude Include="TImage.h" />

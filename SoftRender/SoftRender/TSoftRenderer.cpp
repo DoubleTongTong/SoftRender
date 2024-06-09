@@ -265,6 +265,7 @@ void TSoftRenderer::DrawElements(
 	FragmentShaderFunction fragFunc = std::bind(&TShader::FragmentShader, m_currentShader, std::placeholders::_1, std::placeholders::_2);
 	TShaderContext context(m_currentVertexArray);
 	TVertexShaderOutput vertexOutputs[3];
+	std::vector<TVertexShaderOutput> clippedVertices(10);
 	int primitive = GetPrimitiveCount(mode);
 
 	for (uint32_t i = 0; i < size; i += primitive)
@@ -275,23 +276,107 @@ void TSoftRenderer::DrawElements(
 
 			// VertexShader
 			m_currentShader->VertexShader(context, vertexOutputs[j]);
-
-			// 透视除法
-			vertexOutputs[j].position /= vertexOutputs[j].position.w();
-
-			// NDC - 屏幕
-			vertexOutputs[j].position = m_screenMatrix * vertexOutputs[j].position;
 		}
 
+		clippedVertices.clear();
 		switch (mode)
 		{
 		case TDrawMode::Triangles:
-			m_rz.RasterizeTriangle(vertexOutputs[0], vertexOutputs[1], vertexOutputs[2], fragFunc);
+			SutherlandHodgmanClipTriangle(vertexOutputs, clippedVertices);
 			break;
 		case TDrawMode::Lines:
 		default:
 			assert(0);
 			break;
 		}
+		if (clippedVertices.empty())
+			continue;
+
+		for (TVertexShaderOutput& vertex : clippedVertices)
+		{
+			// 透视除法
+			vertex.position /= vertex.position.w();
+
+			// NDC - 屏幕
+			vertex.position = m_screenMatrix * vertex.position;
+		}
+
+		switch (mode)
+		{
+		case TDrawMode::Triangles:
+			for (uint32_t k = 1; k + 1 < clippedVertices.size(); k++)
+				m_rz.RasterizeTriangle(clippedVertices[0], clippedVertices[k], clippedVertices[k + 1], fragFunc);
+			break;
+		case TDrawMode::Lines:
+		default:
+			assert(0);
+			break;
+		}
+	}
+}
+
+void TSoftRenderer::SutherlandHodgmanClipTriangle(
+	const TVertexShaderOutput vertexOutputs[3],
+	std::vector<TVertexShaderOutput>& clipped)
+{
+	std::vector<TVertexShaderOutput> vertices = { vertexOutputs[0], vertexOutputs[1], vertexOutputs[2] };
+	std::vector<TVertexShaderOutput> tmpVertices;
+
+	const tmath::Vec4f boundaries[] =
+	{
+		{ 0,  0,  0, 1},
+		{ 1,  0,  0, 1},
+		{-1,  0,  0, 1},
+		{ 0,  1,  0, 1},
+		{ 0, -1,  0, 1},
+		{ 0,  0,  1, 1},
+		{ 0,  0, -1, 1},
+	};
+
+	for (const tmath::Vec4f& boundary : boundaries)
+	{
+		if (vertices.empty() == false)
+		{
+			ClipPolygonAgainstBoundary(vertices, tmpVertices, boundary);
+			vertices.swap(tmpVertices);
+			tmpVertices.clear();
+		}
+	}
+
+	clipped = std::move(vertices);
+}
+
+void TSoftRenderer::ClipPolygonAgainstBoundary(
+	const std::vector<TVertexShaderOutput>& vertices,
+	std::vector<TVertexShaderOutput>& outVertices,
+	const tmath::Vec4f& boundary)
+{
+	float t;
+	int prevIndex = vertices.size() - 1;
+
+	for (int i = 0; i < vertices.size(); i++)
+	{
+		const TVertexShaderOutput& prev = vertices[prevIndex];
+		const TVertexShaderOutput& current = vertices[i];
+
+		float prevDistance = tmath::dot(prev.position, boundary);
+		float currentDistance = tmath::dot(current.position, boundary);
+
+		if (currentDistance > 0)
+		{
+			if (prevDistance <= 0)
+			{
+				t = prevDistance / (prevDistance - currentDistance);
+				outVertices.push_back(prev.Lerp(current, t));
+			}
+			outVertices.push_back(current);
+		}
+		else if (prevDistance > 0)
+		{
+			t = prevDistance / (prevDistance - currentDistance);
+			outVertices.push_back(prev.Lerp(current, t));
+		}
+
+		prevIndex = i;
 	}
 }

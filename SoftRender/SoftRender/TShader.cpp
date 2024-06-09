@@ -29,3 +29,23 @@ void TSimpleShader::FragmentShader(const TVertexShaderOutput& input, TFragmentSh
 {
 	output.color = input.color;
 }
+
+TVertexShaderOutput TVertexShaderOutput::Lerp(const TVertexShaderOutput& other, float t) const
+{
+	TVertexShaderOutput res;
+
+	res.position = this->position * (1 - t) + other.position * t;
+
+	if (this->useColor)
+	{
+		res.useColor = true;
+		res.color = this->color * (1 - t) + other.color * t;
+	}
+	else
+	{
+		res.useUV = true;
+		res.uv = this->uv * (1 - t) + other.uv * t;
+	}
+
+	return res;
+}
