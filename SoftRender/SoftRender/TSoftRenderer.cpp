@@ -264,8 +264,8 @@ void TSoftRenderer::DrawElements(
 
 	FragmentShaderFunction fragFunc = std::bind(&TShader::FragmentShader, m_currentShader, std::placeholders::_1, std::placeholders::_2);
 	TShaderContext context(m_currentVertexArray);
-	TVertexShaderOutput vertexOutputs[3];
-	std::vector<TVertexShaderOutput> clippedVertices(10);
+	TVertexShaderOutputPrivate vertexOutputs[3];
+	std::vector<TVertexShaderOutputPrivate> clippedVertices(10);
 	int primitive = GetPrimitiveCount(mode);
 
 	for (uint32_t i = 0; i < size; i += primitive)
@@ -292,7 +292,7 @@ void TSoftRenderer::DrawElements(
 		if (clippedVertices.empty())
 			continue;
 
-		for (TVertexShaderOutput& vertex : clippedVertices)
+		for (TVertexShaderOutputPrivate& vertex : clippedVertices)
 		{
 			// 透视除法
 			vertex.position /= vertex.position.w();
@@ -316,11 +316,11 @@ void TSoftRenderer::DrawElements(
 }
 
 void TSoftRenderer::SutherlandHodgmanClipTriangle(
-	const TVertexShaderOutput vertexOutputs[3],
-	std::vector<TVertexShaderOutput>& clipped)
+	const TVertexShaderOutputPrivate vertexOutputs[3],
+	std::vector<TVertexShaderOutputPrivate>& clipped)
 {
-	std::vector<TVertexShaderOutput> vertices = { vertexOutputs[0], vertexOutputs[1], vertexOutputs[2] };
-	std::vector<TVertexShaderOutput> tmpVertices;
+	std::vector<TVertexShaderOutputPrivate> vertices = { vertexOutputs[0], vertexOutputs[1], vertexOutputs[2] };
+	std::vector<TVertexShaderOutputPrivate> tmpVertices;
 
 	const tmath::Vec4f boundaries[] =
 	{
@@ -347,8 +347,8 @@ void TSoftRenderer::SutherlandHodgmanClipTriangle(
 }
 
 void TSoftRenderer::ClipPolygonAgainstBoundary(
-	const std::vector<TVertexShaderOutput>& vertices,
-	std::vector<TVertexShaderOutput>& outVertices,
+	const std::vector<TVertexShaderOutputPrivate>& vertices,
+	std::vector<TVertexShaderOutputPrivate>& outVertices,
 	const tmath::Vec4f& boundary)
 {
 	float t;
@@ -356,8 +356,8 @@ void TSoftRenderer::ClipPolygonAgainstBoundary(
 
 	for (int i = 0; i < vertices.size(); i++)
 	{
-		const TVertexShaderOutput& prev = vertices[prevIndex];
-		const TVertexShaderOutput& current = vertices[i];
+		const TVertexShaderOutputPrivate& prev = vertices[prevIndex];
+		const TVertexShaderOutputPrivate& current = vertices[i];
 
 		float prevDistance = tmath::dot(prev.position, boundary);
 		float currentDistance = tmath::dot(current.position, boundary);

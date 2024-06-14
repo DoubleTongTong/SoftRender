@@ -14,25 +14,18 @@ TShader::~TShader()
 {
 }
 
-void TSimpleShader::VertexShader(const TShaderContext& context, TVertexShaderOutput& output)
+TVertexShaderOutput::TVertexShaderOutput()
+	: useColor(false), useUV(false)
 {
-	tmath::Vec3f position;
-	context.GetAttribute(0, position);
-
-	output.position = projectionMatrix * viewMatrix * modelMatrix * tmath::Vec4f(position, 1.0f);
-
-	output.useColor = true;
-	context.GetAttribute(1, output.color);
 }
 
-void TSimpleShader::FragmentShader(const TVertexShaderOutput& input, TFragmentShaderOutput& output)
+TVertexShaderOutput::~TVertexShaderOutput()
 {
-	output.color = input.color;
 }
 
-TVertexShaderOutput TVertexShaderOutput::Lerp(const TVertexShaderOutput& other, float t) const
+TVertexShaderOutputPrivate TVertexShaderOutputPrivate::Lerp(const TVertexShaderOutputPrivate& other, float t) const
 {
-	TVertexShaderOutput res;
+	TVertexShaderOutputPrivate res;
 
 	res.position = this->position * (1 - t) + other.position * t;
 

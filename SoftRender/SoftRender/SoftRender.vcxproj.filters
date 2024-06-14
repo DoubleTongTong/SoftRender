@@ -115,6 +115,12 @@
     <Filter Include="源文件\render_tasks\clipping">
       <UniqueIdentifier>{cf861357-ddd9-4d59-8e68-a4b9fa645ef3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\Shaders">
+      <UniqueIdentifier>{63290ce3-0e3d-49af-a590-74202d85ef53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\Shaders">
+      <UniqueIdentifier>{fe8cbe98-0c59-4996-b36a-c446bc2b84ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -182,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="TClippingRenderTask.cpp">
       <Filter>源文件\render_tasks\clipping</Filter>
+    </ClCompile>
+    <ClCompile Include="TPassThroughColorShader.cpp">
+      <Filter>源文件\render_tasks\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="TClippingRenderTask.h">
       <Filter>头文件\render_tasks\clipping</Filter>
+    </ClInclude>
+    <ClInclude Include="TPassThroughColorShader.h">
+      <Filter>头文件\render_tasks\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

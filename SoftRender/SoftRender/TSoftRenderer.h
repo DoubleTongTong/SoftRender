@@ -87,12 +87,12 @@ private:
 	int GetPrimitiveCount(TDrawMode mode);
 
 	void SutherlandHodgmanClipTriangle(
-		const TVertexShaderOutput vertexOutputs[3],
-		std::vector<TVertexShaderOutput>& clipped);
+		const TVertexShaderOutputPrivate vertexOutputs[3],
+		std::vector<TVertexShaderOutputPrivate>& clipped);
 
 	void ClipPolygonAgainstBoundary(
-		const std::vector<TVertexShaderOutput>& vertices,
-		std::vector<TVertexShaderOutput>& outVertices,
+		const std::vector<TVertexShaderOutputPrivate>& vertices,
+		std::vector<TVertexShaderOutputPrivate>& outVertices,
 		const tmath::Vec4f& boundary);
 
 public:

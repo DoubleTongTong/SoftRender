@@ -1,10 +1,11 @@
 #pragma once
 #include "IRenderTask.h"
 #include "TBasicWindow.h"
+#include "TPassThroughColorShader.h"
 
 class TTriangleOGLPipelineRenderTask : public IRenderTask
 {
-    TSimpleShader m_shader;
+    TPassThroughColorShader m_shader;
     float m_angle;
 
 public:

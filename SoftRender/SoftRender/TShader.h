@@ -39,9 +39,13 @@ struct TVertexShaderOutput
 	bool useUV;
 	tmath::Vec2f uv;
 
-private:
-	friend class TSoftRenderer;
-	TVertexShaderOutput Lerp(const TVertexShaderOutput& other, float t) const;
+	TVertexShaderOutput();
+	virtual ~TVertexShaderOutput();
+};
+
+struct TVertexShaderOutputPrivate : public TVertexShaderOutput
+{
+	TVertexShaderOutputPrivate Lerp(const TVertexShaderOutputPrivate& other, float t) const;
 };
 
 struct TFragmentShaderOutput
@@ -58,16 +62,3 @@ public:
 	virtual void VertexShader(const TShaderContext& context, TVertexShaderOutput& output) = 0;
 	virtual void FragmentShader(const TVertexShaderOutput& input, TFragmentShaderOutput& output) = 0;
 };
-
-class TSimpleShader : public TShader
-{
-public:
-	virtual void VertexShader(const TShaderContext& context, TVertexShaderOutput& output) override;
-	virtual void FragmentShader(const TVertexShaderOutput& input, TFragmentShaderOutput& output) override;
-
-public:
-	tmath::Mat4f modelMatrix;
-	tmath::Mat4f viewMatrix;
-	tmath::Mat4f projectionMatrix;
-};
-
