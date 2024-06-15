@@ -149,12 +149,14 @@
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TBilinearUVRenderTask.cpp" />
     <ClCompile Include="TBufferObject.cpp" />
+    <ClCompile Include="TChessboardRenderTask.cpp" />
     <ClCompile Include="TClippingRenderTask.cpp" />
     <ClCompile Include="TColor.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
     <ClCompile Include="TMatrixOpsTask.cpp" />
     <ClCompile Include="TPassThroughColorShader.cpp" />
+    <ClCompile Include="TPassThroughUvShader.cpp" />
     <ClCompile Include="TRadialLinesRenderTask.cpp" />
     <ClCompile Include="TRandomDotRenderTask.cpp" />
     <ClCompile Include="TRasterizer.cpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TBilinearUVRenderTask.h" />
     <ClInclude Include="TBufferObject.h" />
+    <ClInclude Include="TChessboardRenderTask.h" />
     <ClInclude Include="TClippingRenderTask.h" />
     <ClInclude Include="TColor.h" />
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
@@ -183,6 +186,7 @@
     <ClInclude Include="TMatrix.h" />
     <ClInclude Include="TMatrixOpsTask.h" />
     <ClInclude Include="TPassThroughColorShader.h" />
+    <ClInclude Include="TPassThroughUvShader.h" />
     <ClInclude Include="TRadialLinesRenderTask.h" />
     <ClInclude Include="TRandomDotRenderTask.h" />
     <ClInclude Include="TRasterizer.h" />

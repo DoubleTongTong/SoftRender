@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TClippingRenderTask.h"
+#include "TChessboardRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TClippingRenderTask task(win);
+    TChessboardRenderTask task(win);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

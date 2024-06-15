@@ -23,6 +23,11 @@ TVertexShaderOutput::~TVertexShaderOutput()
 {
 }
 
+TVertexShaderOutputPrivate::TVertexShaderOutputPrivate()
+	: TVertexShaderOutput()
+{
+}
+
 TVertexShaderOutputPrivate TVertexShaderOutputPrivate::Lerp(const TVertexShaderOutputPrivate& other, float t) const
 {
 	TVertexShaderOutputPrivate res;

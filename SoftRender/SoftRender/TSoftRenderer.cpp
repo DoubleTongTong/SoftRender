@@ -295,7 +295,13 @@ void TSoftRenderer::DrawElements(
 		for (TVertexShaderOutputPrivate& vertex : clippedVertices)
 		{
 			// 透视除法
-			vertex.position /= vertex.position.w();
+			vertex.invW = 1 / vertex.position.w();
+
+			vertex.position *= vertex.invW;
+			if (vertex.useColor)
+				vertex.color *= vertex.invW;
+			else
+				vertex.uv *= vertex.invW;
 
 			// NDC - 屏幕
 			vertex.position = m_screenMatrix * vertex.position;

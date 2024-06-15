@@ -121,6 +121,12 @@
     <Filter Include="源文件\render_tasks\Shaders">
       <UniqueIdentifier>{fe8cbe98-0c59-4996-b36a-c446bc2b84ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\perspective_correction">
+      <UniqueIdentifier>{404ea413-4a3e-40b8-94dd-5efe301761b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\perspective_correction">
+      <UniqueIdentifier>{a41841e9-541d-4abc-bd3d-37ae27861e4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -191,6 +197,12 @@
     </ClCompile>
     <ClCompile Include="TPassThroughColorShader.cpp">
       <Filter>源文件\render_tasks\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TPassThroughUvShader.cpp">
+      <Filter>源文件\render_tasks\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TChessboardRenderTask.cpp">
+      <Filter>源文件\render_tasks\perspective_correction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -270,6 +282,12 @@
       <Filter>头文件\render_tasks\clipping</Filter>
     </ClInclude>
     <ClInclude Include="TPassThroughColorShader.h">
+      <Filter>头文件\render_tasks\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TChessboardRenderTask.h">
+      <Filter>头文件\render_tasks\perspective_correction</Filter>
+    </ClInclude>
+    <ClInclude Include="TPassThroughUvShader.h">
       <Filter>头文件\render_tasks\Shaders</Filter>
     </ClInclude>
   </ItemGroup>

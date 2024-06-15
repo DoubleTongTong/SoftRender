@@ -45,6 +45,9 @@ struct TVertexShaderOutput
 
 struct TVertexShaderOutputPrivate : public TVertexShaderOutput
 {
+	float invW;
+
+	TVertexShaderOutputPrivate();
 	TVertexShaderOutputPrivate Lerp(const TVertexShaderOutputPrivate& other, float t) const;
 };
 

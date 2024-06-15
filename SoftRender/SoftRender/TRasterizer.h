@@ -25,9 +25,9 @@ public:
 	void Clear(TRGBA color);
 
 	void RasterizeTriangle(
-		const TVertexShaderOutput& v1,
-		const TVertexShaderOutput& v2,
-		const TVertexShaderOutput& v3,
+		const TVertexShaderOutputPrivate& v1,
+		const TVertexShaderOutputPrivate& v2,
+		const TVertexShaderOutputPrivate& v3,
 		FragmentShaderFunction fragShader);
 
 private:

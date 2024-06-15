@@ -355,9 +355,9 @@ TRasterizer& TRasterizer::operator=(TRasterizer&& other) noexcept
 }
 
 void TRasterizer::RasterizeTriangle(
-	const TVertexShaderOutput& v1,
-	const TVertexShaderOutput& v2,
-	const TVertexShaderOutput& v3,
+	const TVertexShaderOutputPrivate& v1,
+	const TVertexShaderOutputPrivate& v2,
+	const TVertexShaderOutputPrivate& v3,
 	FragmentShaderFunction fragShader)
 {
 	const tmath::Vec2i p1 = { (int)v1.position.x(), (int)v1.position.y() };
@@ -372,6 +372,7 @@ void TRasterizer::RasterizeTriangle(
 	tmath::Vec2i p, pp1, pp2, pp3;
 	int c1, c2, c3;
 	float alpha, beta, gamma;
+	float interpInvW;
 	float area = (float)std::abs(tmath::cross(p2 - p1, p3 - p1));
 
 	TFragmentShaderOutput fragOutput;
@@ -399,17 +400,39 @@ void TRasterizer::RasterizeTriangle(
 				beta = std::abs(c3) / area;
 				gamma = std::abs(c1) / area;
 
+				interpInvW = v1.invW * alpha + v2.invW * beta + v3.invW * gamma;
+
 				if (v1.useColor)
 				{
 					interpolatedInput.color = tmath::interpolate(
 						v1.color, alpha,
 						v2.color, beta,
 						v3.color, gamma
-					);
+					) / interpInvW;
 
 					fragShader(interpolatedInput, fragOutput);
 
 					SetPixel(i, j, TRGBA::FromVec4f(fragOutput.color));
+				}
+				else
+				{
+					interpolatedInput.uv = tmath::interpolate(
+						v1.uv, alpha,
+						v2.uv, beta,
+						v3.uv, gamma
+					) / interpInvW;
+
+					switch (m_state->GetSampleMode())
+					{
+					case TSampleMode::Bilinear:
+						SetPixel(i, j, SampleTextureBilinear(interpolatedInput.uv));
+						break;
+
+					case TSampleMode::Nearest:
+					default:
+						SetPixel(i, j, SampleTextureNearest(interpolatedInput.uv));
+						break;
+					}
 				}
 			}
 		}
