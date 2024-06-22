@@ -227,6 +227,11 @@ namespace tmath
 		const T& y() const { return Vector<T, 4>::elements[1]; }
 		const T& z() const { return Vector<T, 4>::elements[2]; }
 		const T& w() const { return Vector<T, 4>::elements[3]; }
+
+		operator Vector3<T>() const
+		{
+			return Vector3<T>(Vector<T, 4>::elements[0], Vector<T, 4>::elements[1], Vector<T, 4>::elements[2]);
+		}
 	};
 
 	template<typename T, size_t N>

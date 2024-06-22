@@ -127,6 +127,12 @@
     <Filter Include="源文件\render_tasks\perspective_correction">
       <UniqueIdentifier>{a41841e9-541d-4abc-bd3d-37ae27861e4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\culling">
+      <UniqueIdentifier>{f6664234-0344-4772-8381-464ff24c6fbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\culling">
+      <UniqueIdentifier>{df0b48ea-7050-4afa-bb6c-ac649d4f310c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -203,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="TChessboardRenderTask.cpp">
       <Filter>源文件\render_tasks\perspective_correction</Filter>
+    </ClCompile>
+    <ClCompile Include="TBackFaceCullingRenderTask.cpp">
+      <Filter>源文件\render_tasks\culling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="TPassThroughUvShader.h">
       <Filter>头文件\render_tasks\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TBackFaceCullingRenderTask.h">
+      <Filter>头文件\render_tasks\culling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

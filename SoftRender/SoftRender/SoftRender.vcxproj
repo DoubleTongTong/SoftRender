@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TBackFaceCullingRenderTask.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TBilinearUVRenderTask.cpp" />
     <ClCompile Include="TBufferObject.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="IRenderTask.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TBackFaceCullingRenderTask.h" />
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TBilinearUVRenderTask.h" />
     <ClInclude Include="TBufferObject.h" />

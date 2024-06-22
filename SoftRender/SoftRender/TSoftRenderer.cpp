@@ -77,6 +77,22 @@ void TSoftRenderer::SetWrapMode(TWrapMode mode)
 	m_state.SetWrapMode(mode);
 }
 
+void TSoftRenderer::Enable(TEnableCap cap)
+{
+	if (cap == TEnableCap::CullFace)
+		m_state.SetCulling(true);
+}
+
+void TSoftRenderer::CullFace(TCullFace mode)
+{
+	m_state.SetCullFace(mode);
+}
+
+void TSoftRenderer::FrontFace(TFrontFace mode)
+{
+	m_state.SetFrontFace(mode);
+}
+
 uint32_t TSoftRenderer::AllocateBufferId()
 {
 	if (m_freeBufferIds.empty())
@@ -311,7 +327,12 @@ void TSoftRenderer::DrawElements(
 		{
 		case TDrawMode::Triangles:
 			for (uint32_t k = 1; k + 1 < clippedVertices.size(); k++)
-				m_rz.RasterizeTriangle(clippedVertices[0], clippedVertices[k], clippedVertices[k + 1], fragFunc);
+			{
+				if (ShouldCullTriangle(clippedVertices[0], clippedVertices[k], clippedVertices[k + 1]) == false)
+				{
+					m_rz.RasterizeTriangle(clippedVertices[0], clippedVertices[k], clippedVertices[k + 1], fragFunc);
+				}
+			}
 			break;
 		case TDrawMode::Lines:
 		default:
@@ -385,4 +406,24 @@ void TSoftRenderer::ClipPolygonAgainstBoundary(
 
 		prevIndex = i;
 	}
+}
+
+bool TSoftRenderer::ShouldCullTriangle(
+	const TVertexShaderOutputPrivate& v1,
+	const TVertexShaderOutputPrivate& v2,
+	const TVertexShaderOutputPrivate& v3
+)
+{
+	if (m_state.IsCullingEnabled() == false)
+		return false;
+
+	tmath::Vec3f edge1 = static_cast<tmath::Vec4f>(v2.position - v1.position);
+	tmath::Vec3f edge2 = static_cast<tmath::Vec4f>(v3.position - v1.position);
+
+	tmath::Vec3f normal = tmath::cross(edge1, edge2);
+
+	bool isFrontFacing = (normal.z() > 0) ^ (m_state.GetFrontFace() == TFrontFace::Clockwise);
+
+	return (m_state.GetCullFace() == TCullFace::Back && !isFrontFacing) ||
+		   (m_state.GetCullFace() == TCullFace::Front && isFrontFacing);
 }

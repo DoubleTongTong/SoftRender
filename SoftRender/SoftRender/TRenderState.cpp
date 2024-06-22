@@ -4,7 +4,10 @@ TRenderState::TRenderState()
 	: m_blendEnabled(false),
 	  m_texture(0),
 	  m_sampleMode(TSampleMode::Nearest),
-	  m_wrapMode(TWrapMode::Repeat)
+	  m_wrapMode(TWrapMode::Repeat),
+	  m_cullEnabled(false),
+	  m_cullFace(TCullFace::Back),
+	  m_frontFace(TFrontFace::CounterClockwise)
 {
 }
 
@@ -46,4 +49,34 @@ void TRenderState::SetWrapMode(TWrapMode mode)
 TWrapMode TRenderState::GetWrapMode()
 {
 	return m_wrapMode;
+}
+
+void TRenderState::SetCulling(bool enabled)
+{
+	m_cullEnabled = enabled;
+}
+
+bool TRenderState::IsCullingEnabled()
+{
+	return m_cullEnabled;
+}
+
+void TRenderState::SetCullFace(TCullFace face)
+{
+	m_cullFace = face;
+}
+
+TCullFace TRenderState::GetCullFace()
+{
+	return m_cullFace;
+}
+
+void TRenderState::SetFrontFace(TFrontFace face)
+{
+	m_frontFace = face;
+}
+
+TFrontFace TRenderState::GetFrontFace()
+{
+	return m_frontFace;
 }

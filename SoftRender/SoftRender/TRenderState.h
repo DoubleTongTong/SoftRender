@@ -14,6 +14,23 @@ enum class TWrapMode
 	Mirror,
 };
 
+enum class TCullFace
+{
+	Back,
+	Front,
+};
+
+enum class TFrontFace
+{
+	Clockwise,
+	CounterClockwise,
+};
+
+enum class TEnableCap
+{
+	CullFace,
+};
+
 class TRenderState
 {
 public:
@@ -30,9 +47,26 @@ public:
 
 	void SetWrapMode(TWrapMode mode);
 	TWrapMode GetWrapMode();
+
+	/**
+	 * Culling
+	 */
+	void SetCulling(bool enabled);
+	bool IsCullingEnabled();
+
+	void SetCullFace(TCullFace face);
+	TCullFace GetCullFace();
+
+	void SetFrontFace(TFrontFace face);
+	TFrontFace GetFrontFace();
+
 private:
 	bool m_blendEnabled;
 	const TImage* m_texture;
 	TSampleMode m_sampleMode;
 	TWrapMode m_wrapMode;
+
+	bool       m_cullEnabled;
+	TCullFace  m_cullFace;
+	TFrontFace m_frontFace;
 };

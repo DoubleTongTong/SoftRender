@@ -21,6 +21,10 @@ public:
 	void SetSampleMode(TSampleMode mode);
 	void SetWrapMode(TWrapMode mode);
 
+	void Enable(TEnableCap cap);
+	void CullFace(TCullFace mode);
+	void FrontFace(TFrontFace mode);
+
 	void GenBuffers(uint32_t n, uint32_t* buffers);
 	void DeleteBuffers(uint32_t n, uint32_t* buffers);
 	void GenVertexArrays(uint32_t n, uint32_t* arrays);
@@ -94,6 +98,12 @@ private:
 		const std::vector<TVertexShaderOutputPrivate>& vertices,
 		std::vector<TVertexShaderOutputPrivate>& outVertices,
 		const tmath::Vec4f& boundary);
+
+	bool ShouldCullTriangle(
+		const TVertexShaderOutputPrivate& v1,
+		const TVertexShaderOutputPrivate& v2,
+		const TVertexShaderOutputPrivate& v3
+	);
 
 public:
 	TSoftRenderer(TSoftRenderer&& other) noexcept = default;
