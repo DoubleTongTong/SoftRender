@@ -153,6 +153,7 @@
     <ClCompile Include="TChessboardRenderTask.cpp" />
     <ClCompile Include="TClippingRenderTask.cpp" />
     <ClCompile Include="TColor.cpp" />
+    <ClCompile Include="TDepthTestRenderTask.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
     <ClCompile Include="TMatrixOpsTask.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="TClippingRenderTask.h" />
     <ClInclude Include="TColor.h" />
     <ClInclude Include="TColorfulTriangleRenderTask.h" />
+    <ClInclude Include="TDepthTestRenderTask.h" />
     <ClInclude Include="TImage.h" />
     <ClInclude Include="TImageDisplayTask.h" />
     <ClInclude Include="TMatrix.h" />

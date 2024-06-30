@@ -21,9 +21,14 @@ public:
 	void SetSampleMode(TSampleMode mode);
 	void SetWrapMode(TWrapMode mode);
 
+	void ClearColor(TRGBA color);
+	void ClearDepth(float depth);
+
 	void Enable(TEnableCap cap);
 	void CullFace(TCullFace mode);
 	void FrontFace(TFrontFace mode);
+
+	void DepthFunc(TDepthFunc func);
 
 	void GenBuffers(uint32_t n, uint32_t* buffers);
 	void DeleteBuffers(uint32_t n, uint32_t* buffers);
@@ -113,7 +118,6 @@ public:
 	TSoftRenderer& operator=(const TSoftRenderer&) = delete;
 
 public:
-	void Clear(TRGBA color);
 	void SetPixel(int x, int y, TRGBA color);
 	void DrawLine(int x1, int y1, TRGBA color1, int x2, int y2, TRGBA color2);
 	void DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,

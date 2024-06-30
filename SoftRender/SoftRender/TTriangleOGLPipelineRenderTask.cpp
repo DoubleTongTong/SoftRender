@@ -68,7 +68,7 @@ void TTriangleOGLPipelineRenderTask::Render(TSoftRenderer& sr)
 {
     Transform();
 
-    sr.Clear({ 0,0,0 });
+    sr.ClearColor({ 0,0,0 });
 
     sr.DrawElements(TDrawMode::Triangles, 3, 0);
 }

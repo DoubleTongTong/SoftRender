@@ -359,11 +359,12 @@ namespace tmath
 	{
 		T halfWidth = static_cast<T>(width) / 2;
 		T halfHeight = static_cast<T>(height) / 2;
+		T halfDepth = static_cast<T>(1) / 2;
 
 		return Matrix<T, 4, 4>({
 			halfWidth, 0, 0, halfWidth,
 			0, -halfHeight, 0, halfHeight,
-			0, 0, 1, 0,
+			0, 0, halfDepth, halfDepth,
 			0, 0, 0, 1
 			});
 	}

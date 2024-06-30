@@ -7,7 +7,9 @@ TRenderState::TRenderState()
 	  m_wrapMode(TWrapMode::Repeat),
 	  m_cullEnabled(false),
 	  m_cullFace(TCullFace::Back),
-	  m_frontFace(TFrontFace::CounterClockwise)
+	  m_frontFace(TFrontFace::CounterClockwise),
+	  m_depthTestEnabled(false),
+	  m_depthFunc(TDepthFunc::Less)
 {
 }
 
@@ -79,4 +81,26 @@ void TRenderState::SetFrontFace(TFrontFace face)
 TFrontFace TRenderState::GetFrontFace()
 {
 	return m_frontFace;
+}
+
+
+void TRenderState::SetDepthTest(bool enabled)
+{
+	m_depthTestEnabled = enabled;
+}
+
+
+bool TRenderState::IsDepthTestEnabled()
+{
+	return m_depthTestEnabled;
+}
+
+void TRenderState::SetDepthFunc(TDepthFunc func)
+{
+	m_depthFunc = func;
+}
+
+TDepthFunc TRenderState::GetDepthFunc()
+{
+	return m_depthFunc;
 }

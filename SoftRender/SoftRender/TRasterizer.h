@@ -22,7 +22,8 @@ public:
 	void DrawTriangle(const tmath::Point2i& p1, const tmath::Point2i& p2, const tmath::Point2i& p3,
 		const tmath::UV2f& uv1, const tmath::UV2f& uv2, const tmath::UV2f& uv3);
 	void DrawImage(const TImage& image, int startX, int startY);
-	void Clear(TRGBA color);
+	void ClearColor(TRGBA color);
+	void ClearDepth(float depth);
 
 	void RasterizeTriangle(
 		const TVertexShaderOutputPrivate& v1,
@@ -32,6 +33,7 @@ public:
 
 private:
 	uint32_t* m_pBits;  // raw pixel data
+	std::vector<float> m_depthBuffer;  // depth buffer
 	int       m_width;
 	int       m_height;
 
@@ -46,6 +48,8 @@ private:
 	TRGBA SampleTextureBilinear(const tmath::UV2f& uv);
 
 	tmath::UV2f AdjustUV(const tmath::UV2f& uv);
+
+	bool DepthTest(int x, int y, float depth);
 public:
 	TRasterizer(TRasterizer&& other) noexcept;
 	TRasterizer& operator=(TRasterizer&& other) noexcept;

@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TBackFaceCullingRenderTask.h"
+#include "TDepthTestRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TBackFaceCullingRenderTask task(win);
+    TDepthTestRenderTask task(win);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

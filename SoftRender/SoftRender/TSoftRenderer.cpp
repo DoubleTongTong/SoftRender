@@ -5,7 +5,8 @@ TSoftRenderer::TSoftRenderer()
 	  m_nextVaoId(0),
 	  m_currentArrayBuffer(NULL),
 	  m_currentElementBuffer(NULL),
-	  m_currentVertexArray(NULL)
+	  m_currentVertexArray(NULL),
+	  m_currentShader(NULL)
 {
 }
 
@@ -25,9 +26,14 @@ int TSoftRenderer::GetRenderHeight()
 	return m_rz.GetHeight();
 }
 
-void TSoftRenderer::Clear(TRGBA color)
+void TSoftRenderer::ClearColor(TRGBA color)
 {
-	m_rz.Clear(color);
+	m_rz.ClearColor(color);
+}
+
+void TSoftRenderer::ClearDepth(float depth)
+{
+	m_rz.ClearDepth(depth);
 }
 
 void TSoftRenderer::SetPixel(int x, int y, TRGBA color)
@@ -81,6 +87,8 @@ void TSoftRenderer::Enable(TEnableCap cap)
 {
 	if (cap == TEnableCap::CullFace)
 		m_state.SetCulling(true);
+	else if (cap == TEnableCap::DepthTest)
+		m_state.SetDepthTest(true);
 }
 
 void TSoftRenderer::CullFace(TCullFace mode)
@@ -91,6 +99,11 @@ void TSoftRenderer::CullFace(TCullFace mode)
 void TSoftRenderer::FrontFace(TFrontFace mode)
 {
 	m_state.SetFrontFace(mode);
+}
+
+void TSoftRenderer::DepthFunc(TDepthFunc func)
+{
+	m_state.SetDepthFunc(func);
 }
 
 uint32_t TSoftRenderer::AllocateBufferId()
@@ -349,7 +362,7 @@ void TSoftRenderer::SutherlandHodgmanClipTriangle(
 	std::vector<TVertexShaderOutputPrivate> vertices = { vertexOutputs[0], vertexOutputs[1], vertexOutputs[2] };
 	std::vector<TVertexShaderOutputPrivate> tmpVertices;
 
-	const tmath::Vec4f boundaries[] =
+	static const tmath::Vec4f boundaries[] =
 	{
 		{ 0,  0,  0, 1},
 		{ 1,  0,  0, 1},

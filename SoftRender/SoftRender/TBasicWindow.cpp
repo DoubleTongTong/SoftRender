@@ -148,7 +148,7 @@ void TBasicWindow::CreateDrawResources(int width, int height)
     m_windowHeight = height;
 
     m_sr.SetRasterizer((uint32_t*)m_pBits, width, height);
-    m_sr.Clear(TRGBA(255, 0, 0));
+    m_sr.ClearColor(TRGBA(255, 0, 0));
 }
 
 void TBasicWindow::UpdateFrame()

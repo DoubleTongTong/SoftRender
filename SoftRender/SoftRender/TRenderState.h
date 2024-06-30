@@ -29,6 +29,15 @@ enum class TFrontFace
 enum class TEnableCap
 {
 	CullFace,
+	DepthTest,
+};
+
+enum class TDepthFunc
+{
+	Less,
+	LessEqual,
+	Greater,
+	GreaterEqual,
 };
 
 class TRenderState
@@ -60,6 +69,15 @@ public:
 	void SetFrontFace(TFrontFace face);
 	TFrontFace GetFrontFace();
 
+	/**
+	 * Depth Test
+	 */
+	void SetDepthTest(bool enabled);
+	bool IsDepthTestEnabled();
+
+	void SetDepthFunc(TDepthFunc func);
+	TDepthFunc GetDepthFunc();
+
 private:
 	bool m_blendEnabled;
 	const TImage* m_texture;
@@ -69,4 +87,7 @@ private:
 	bool       m_cullEnabled;
 	TCullFace  m_cullFace;
 	TFrontFace m_frontFace;
+
+	bool       m_depthTestEnabled;
+	TDepthFunc m_depthFunc;
 };

@@ -12,7 +12,8 @@ TRasterizer::TRasterizer(uint32_t* pBits, int width, int height, TRenderState* m
 	: m_pBits(pBits),
 	  m_width(width),
 	  m_height(height),
-	  m_state(m_state)
+	  m_state(m_state),
+	  m_depthBuffer(width * height)
 {
 }
 
@@ -94,7 +95,7 @@ void TRasterizer::DrawLineBresenham(int x1, int y1, TRGBA color1, int x2, int y2
 {
 	bool useSwappedXY = std::abs(y2 - y1) > std::abs(x2 - x1);
 
-	// Èç¹ûÏß¶ÎĞ±ÂÊ¾ø¶ÔÖµ´óÓÚ 1£¬Ôò½»»» x ºÍ y
+	// å¦‚æœçº¿æ®µæ–œç‡ç»å¯¹å€¼å¤§äº 1ï¼Œåˆ™äº¤æ¢ x å’Œ y
 	if (useSwappedXY)
 	{
 		std::swap(x1, y1);
@@ -325,7 +326,7 @@ tmath::UV2f TRasterizer::AdjustUV(const tmath::UV2f& uv)
 	}
 }
 
-void TRasterizer::Clear(TRGBA color)
+void TRasterizer::ClearColor(TRGBA color)
 {
 	for (int i = 0; i < m_width * m_height; i++)
 	{
@@ -333,11 +334,17 @@ void TRasterizer::Clear(TRGBA color)
 	}
 }
 
+void TRasterizer::ClearDepth(float depth)
+{
+	std::fill(m_depthBuffer.begin(), m_depthBuffer.end(), depth);
+}
+
 TRasterizer::TRasterizer(TRasterizer&& other) noexcept
 	: m_pBits(other.m_pBits),
 	  m_width(other.m_width),
 	  m_height(other.m_height),
-	  m_state(other.m_state)
+	  m_state(other.m_state),
+	  m_depthBuffer(std::move(other.m_depthBuffer))
 {
 }
 
@@ -349,6 +356,7 @@ TRasterizer& TRasterizer::operator=(TRasterizer&& other) noexcept
 		m_width = other.m_width;
 		m_height = other.m_height;
 		m_state = other.m_state;
+		m_depthBuffer = std::move(other.m_depthBuffer);
 	}
 
 	return *this;
@@ -401,6 +409,17 @@ void TRasterizer::RasterizeTriangle(
 				gamma = std::abs(c1) / area;
 
 				interpInvW = v1.invW * alpha + v2.invW * beta + v3.invW * gamma;
+				interpolatedInput.position.z() = (
+					v1.position.z() * alpha +
+					v2.position.z() * beta +
+					v3.position.z() * gamma
+					);
+
+				/**
+				 * æ·±åº¦æµ‹è¯•
+				 */
+				if (DepthTest(i, j, interpolatedInput.position.z()) == false)
+					continue;
 
 				if (v1.useColor)
 				{
@@ -437,4 +456,31 @@ void TRasterizer::RasterizeTriangle(
 			}
 		}
 	}
+}
+
+bool TRasterizer::DepthTest(int x, int y, float depth)
+{
+	if (m_state->IsDepthTestEnabled() == false)
+		return true;
+
+	static const std::unordered_map<TDepthFunc, std::function<bool(float, float)>> depthFuncMap =
+	{
+		{ TDepthFunc::Less,         [](float depth, float storedDepth) { return depth < storedDepth; } },
+		{ TDepthFunc::LessEqual,    [](float depth, float storedDepth) { return depth <= storedDepth; } },
+		{ TDepthFunc::Greater,      [](float depth, float storedDepth) { return depth > storedDepth; } },
+		{ TDepthFunc::GreaterEqual, [](float depth, float storedDepth) { return depth >= storedDepth; } },
+	};
+
+	int index = y * m_width + x;
+
+	auto it = depthFuncMap.find(m_state->GetDepthFunc());
+	assert(it != depthFuncMap.end());
+
+	if (it->second(depth, m_depthBuffer[index]))
+	{
+		m_depthBuffer[index] = depth;
+		return true;
+	}
+
+	return false;
 }

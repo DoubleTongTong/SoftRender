@@ -80,7 +80,7 @@ void TViewTransformRenderTask::Transform()
 void TViewTransformRenderTask::Render(TSoftRenderer& sr)
 {
 	Transform();
-	sr.Clear({ 0,0,0 });
+	sr.ClearColor({ 0,0,0 });
 	for (int i = 0; i < 12; i++)
 	{
 		sr.DrawTriangle(m_screenPoints[3 * i], m_screenPoints[3 * i + 1], m_screenPoints[3 * i + 2],

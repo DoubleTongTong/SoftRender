@@ -9,7 +9,7 @@ void TRadialLinesRenderTask::Render(TSoftRenderer& sr)
 	const int angleInterval = 5;
 	int r = std::min(sr.GetRenderWidth(), sr.GetRenderHeight()) / 2;
 
-	sr.Clear(TRGBA(0, 0, 0));
+	sr.ClearColor(TRGBA(0, 0, 0));
 	for (int angle = 0; angle < 360; angle += angleInterval)
 	{
 		double radian = angle * 3.14159265358979323846 / 180.0;

@@ -133,6 +133,12 @@
     <Filter Include="源文件\render_tasks\culling">
       <UniqueIdentifier>{df0b48ea-7050-4afa-bb6c-ac649d4f310c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\depth_test">
+      <UniqueIdentifier>{7ad60273-0796-406d-9fd7-cb9fac111999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\depth_test">
+      <UniqueIdentifier>{a6cf5de5-740f-4fec-90b0-752f0d6d8172}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="TBackFaceCullingRenderTask.cpp">
       <Filter>源文件\render_tasks\culling</Filter>
+    </ClCompile>
+    <ClCompile Include="TDepthTestRenderTask.cpp">
+      <Filter>源文件\render_tasks\depth_test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="TBackFaceCullingRenderTask.h">
       <Filter>头文件\render_tasks\culling</Filter>
+    </ClInclude>
+    <ClInclude Include="TDepthTestRenderTask.h">
+      <Filter>头文件\render_tasks\depth_test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

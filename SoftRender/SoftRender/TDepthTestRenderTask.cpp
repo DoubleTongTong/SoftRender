@@ -1,28 +1,37 @@
-#include "TBackFaceCullingRenderTask.h"
+#include "TDepthTestRenderTask.h"
 
-TBackFaceCullingRenderTask::TBackFaceCullingRenderTask(TBasicWindow& win)
-    : m_angle(0)
+TDepthTestRenderTask::TDepthTestRenderTask(TBasicWindow& win)
 {
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        -0.5f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f
+        // 第一个三角形
+        -0.5f, 0.0f, 0.0f,
+         0.5f, 0.0f, 0.0f,
+        0.25f, 0.5f, 0.0f,
+
+        // 第二个三角形
+        0.3f, 0.0f, 0.3f,
+        0.8f, 0.0f, 0.3f,
+        0.45f, 0.5f, 0.3f,
     };
 
     float colors[] = {
+        // 第一个三角形
         1.0f, 0.0f, 0.0f, 1.0f,
         0.0f, 1.0f, 0.0f, 1.0f,
         0.0f, 0.0f, 1.0f, 1.0f,
-    };
 
-    float uvs[] = {
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 0.0f
+        // 第二个三角形
+        1.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 0.0f, 1.0f,
     };
 
     uint32_t indices[] = {
-        0, 1, 2
+        // 第一个三角形
+        0, 1, 2,
+
+        // 第二个三角形
+        3, 4, 5,
     };
 
     TSoftRenderer& sr = win.GetRenderer();
@@ -41,11 +50,6 @@ TBackFaceCullingRenderTask::TBackFaceCullingRenderTask(TBasicWindow& win)
     sr.BufferData(TBufferType::ArrayBuffer, sizeof(colors), colors);
     sr.VertexAttribPointer(1, 4, 4 * sizeof(float), 0);
 
-    sr.GenBuffers(1, &vboUv);
-    sr.BindBuffer(TBufferType::ArrayBuffer, vboUv);
-    sr.BufferData(TBufferType::ArrayBuffer, sizeof(uvs), uvs);
-    sr.VertexAttribPointer(2, 2, 2 * sizeof(float), 0);
-
     sr.GenBuffers(1, &ebo);
     sr.BindBuffer(TBufferType::ElementArrayBuffer, ebo);
     sr.BufferData(TBufferType::ElementArrayBuffer, sizeof(indices), indices);
@@ -59,27 +63,22 @@ TBackFaceCullingRenderTask::TBackFaceCullingRenderTask(TBasicWindow& win)
     float aspect = (float)width / height;
 
     m_shader.projectionMatrix = tmath::PerspectiveMatrix(tmath::degToRad(60.0f), aspect, 0.1f, 100.0f);
-    m_shader.viewMatrix = tmath::TranslationMatrix(0.0f, 0.0f, 3.0f);
+    m_shader.viewMatrix = tmath::TranslationMatrix(0.0f, 0.0f, 2.0f);
+    m_shader.modelMatrix.ToIdentity();
 
     sr.UseProgram(&m_shader);
 
     ////
-    sr.Enable(TEnableCap::CullFace);
-    sr.CullFace(TCullFace::Back);
-    sr.FrontFace(TFrontFace::CounterClockwise);
+    sr.Enable(TEnableCap::DepthTest);
+    sr.DepthFunc(TDepthFunc::Less);
 }
 
-void TBackFaceCullingRenderTask::Render(TSoftRenderer& sr)
-{
-    Transform();
 
+void TDepthTestRenderTask::Render(TSoftRenderer& sr)
+{
     sr.ClearColor({ 0,0,0 });
+    sr.ClearDepth(1.0f);
 
     sr.DrawElements(TDrawMode::Triangles, 3, 0);
-}
-
-void TBackFaceCullingRenderTask::Transform()
-{
-    m_angle -= 0.01f;
-    m_shader.modelMatrix = tmath::RotationMatrix(tmath::Vec3f(0.0f, 1.0f, 0.0f), m_angle);
+    sr.DrawElements(TDrawMode::Triangles, 3, 3 * sizeof(uint32_t));
 }
