@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TDepthTestRenderTask.h"
+#include "TCubeRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TDepthTestRenderTask task(win);
+    TCubeRenderTask task(win);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

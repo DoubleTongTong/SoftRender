@@ -222,6 +222,9 @@
     <ClCompile Include="TDepthTestRenderTask.cpp">
       <Filter>源文件\render_tasks\depth_test</Filter>
     </ClCompile>
+    <ClCompile Include="TCubeRenderTask.cpp">
+      <Filter>源文件\render_tasks\depth_test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TBasicWindow.h">
@@ -312,6 +315,9 @@
       <Filter>头文件\render_tasks\culling</Filter>
     </ClInclude>
     <ClInclude Include="TDepthTestRenderTask.h">
+      <Filter>头文件\render_tasks\depth_test</Filter>
+    </ClInclude>
+    <ClInclude Include="TCubeRenderTask.h">
       <Filter>头文件\render_tasks\depth_test</Filter>
     </ClInclude>
   </ItemGroup>
