@@ -149,6 +149,7 @@
     <ClCompile Include="TBackFaceCullingRenderTask.cpp" />
     <ClCompile Include="TBasicWindow.cpp" />
     <ClCompile Include="TBilinearUVRenderTask.cpp" />
+    <ClCompile Include="TBlendTestRenderTask.cpp" />
     <ClCompile Include="TBufferObject.cpp" />
     <ClCompile Include="TChessboardRenderTask.cpp" />
     <ClCompile Include="TClippingRenderTask.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="TBackFaceCullingRenderTask.h" />
     <ClInclude Include="TBasicWindow.h" />
     <ClInclude Include="TBilinearUVRenderTask.h" />
+    <ClInclude Include="TBlendTestRenderTask.h" />
     <ClInclude Include="TBufferObject.h" />
     <ClInclude Include="TChessboardRenderTask.h" />
     <ClInclude Include="TClippingRenderTask.h" />

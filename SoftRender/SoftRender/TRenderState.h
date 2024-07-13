@@ -30,6 +30,7 @@ enum class TEnableCap
 {
 	CullFace,
 	DepthTest,
+	Blend,
 };
 
 enum class TDepthFunc

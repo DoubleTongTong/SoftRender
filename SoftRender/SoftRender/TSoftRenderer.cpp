@@ -89,6 +89,8 @@ void TSoftRenderer::Enable(TEnableCap cap)
 		m_state.SetCulling(true);
 	else if (cap == TEnableCap::DepthTest)
 		m_state.SetDepthTest(true);
+	else if (cap == TEnableCap::Blend)
+		m_state.SetBlend(true);
 }
 
 void TSoftRenderer::CullFace(TCullFace mode)

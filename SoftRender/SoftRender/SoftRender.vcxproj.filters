@@ -139,6 +139,12 @@
     <Filter Include="源文件\render_tasks\depth_test">
       <UniqueIdentifier>{a6cf5de5-740f-4fec-90b0-752f0d6d8172}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\blending">
+      <UniqueIdentifier>{c9b3e94f-700e-4184-a818-9b92345cd141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\blending">
+      <UniqueIdentifier>{0e4b1dcf-c376-44d2-8385-967c4fd955fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -224,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="TCubeRenderTask.cpp">
       <Filter>源文件\render_tasks\depth_test</Filter>
+    </ClCompile>
+    <ClCompile Include="TBlendTestRenderTask.cpp">
+      <Filter>源文件\render_tasks\blending</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="TCubeRenderTask.h">
       <Filter>头文件\render_tasks\depth_test</Filter>
+    </ClInclude>
+    <ClInclude Include="TBlendTestRenderTask.h">
+      <Filter>头文件\render_tasks\blending</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
