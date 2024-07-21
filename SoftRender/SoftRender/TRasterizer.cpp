@@ -368,9 +368,9 @@ void TRasterizer::RasterizeTriangle(
 	const TVertexShaderOutputPrivate& v3,
 	FragmentShaderFunction fragShader)
 {
-	const tmath::Vec2i p1 = { (int)v1.position.x(), (int)v1.position.y() };
-	const tmath::Vec2i p2 = { (int)v2.position.x(), (int)v2.position.y() };
-	const tmath::Vec2i p3 = { (int)v3.position.x(), (int)v3.position.y() };
+	const tmath::Vec2i p1 = { (int)v1.builtin_position.x(), (int)v1.builtin_position.y() };
+	const tmath::Vec2i p2 = { (int)v2.builtin_position.x(), (int)v2.builtin_position.y() };
+	const tmath::Vec2i p3 = { (int)v3.builtin_position.x(), (int)v3.builtin_position.y() };
 
 	int minX = std::min(p1.x(), std::min(p2.x(), p3.x()));
 	int maxX = std::max(p1.x(), std::max(p2.x(), p3.x()));
@@ -409,50 +409,41 @@ void TRasterizer::RasterizeTriangle(
 				gamma = std::abs(c1) / area;
 
 				interpInvW = v1.invW * alpha + v2.invW * beta + v3.invW * gamma;
-				interpolatedInput.position.z() = (
-					v1.position.z() * alpha +
-					v2.position.z() * beta +
-					v3.position.z() * gamma
+
+				interpolatedInput.builtin_position.z() = (
+					v1.builtin_position.z() * alpha +
+					v2.builtin_position.z() * beta +
+					v3.builtin_position.z() * gamma
 					);
 
 				/**
 				 * 深度测试
 				 */
-				if (DepthTest(i, j, interpolatedInput.position.z()) == false)
+				if (DepthTest(i, j, interpolatedInput.builtin_position.z()) == false)
 					continue;
 
-				if (v1.useColor)
+				for (auto& var : v1.variables)
 				{
-					interpolatedInput.color = tmath::interpolate(
-						v1.color, alpha,
-						v2.color, beta,
-						v3.color, gamma
-					) / interpInvW;
+					const std::string& name = var.first;
 
-					fragShader(interpolatedInput, fragOutput);
+					std::visit([&](const auto& var1, const auto& var2, const auto& var3) {
+						using T1 = std::decay_t<decltype(var1)>;
+						using T2 = std::decay_t<decltype(var2)>;
+						using T3 = std::decay_t<decltype(var3)>;
 
-					SetPixel(i, j, TRGBA::FromVec4f(fragOutput.color));
+						if constexpr (std::is_same_v<T1, T2> && std::is_same_v<T1, T3>)
+						{
+							interpolatedInput.variables[name] = tmath::interpolate(
+								var1, alpha,
+								var2, beta,
+								var3, gamma
+							) / interpInvW;
+						}
+					}, var.second, v2.variables.at(name), v3.variables.at(name));
 				}
-				else
-				{
-					interpolatedInput.uv = tmath::interpolate(
-						v1.uv, alpha,
-						v2.uv, beta,
-						v3.uv, gamma
-					) / interpInvW;
 
-					switch (m_state->GetSampleMode())
-					{
-					case TSampleMode::Bilinear:
-						SetPixel(i, j, SampleTextureBilinear(interpolatedInput.uv));
-						break;
-
-					case TSampleMode::Nearest:
-					default:
-						SetPixel(i, j, SampleTextureNearest(interpolatedInput.uv));
-						break;
-					}
-				}
+				fragShader(interpolatedInput, fragOutput);
+				SetPixel(i, j, TRGBA::FromVec4f(fragOutput.color));
 			}
 		}
 	}

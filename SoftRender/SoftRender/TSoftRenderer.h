@@ -3,6 +3,7 @@
 #include "TRasterizer.h"
 #include "TBufferObject.h"
 #include "TVertexArrayObject.h"
+#include "TTexture.h"
 #include "TShader.h"
 #include <unordered_map>
 #include <queue>
@@ -38,6 +39,12 @@ public:
 	void BindBuffer(TBufferType target, uint32_t buffer);
 	void BufferData(TBufferType target, uint32_t size, void* data);
 	void BindVertexArray(uint32_t array);
+
+	void GenTextures(uint32_t n, uint32_t* textures);
+	void BindTexture(uint32_t texture);
+	void TexImage2D(int width, int height, void* data);
+	void TexParameter(TTextureParam pname, int param);
+	void DeleteTextures(uint32_t n, uint32_t* textures);
 	/**
 	 * 简化处理，该函数默认所有数据类型为 `float`。
 	 */
@@ -80,10 +87,16 @@ private:
 	std::queue<uint32_t> m_freeVaoIds;
 	uint32_t m_nextVaoId;
 
+	/* Texture */
+	std::unordered_map<uint32_t, TTexture*> m_textureMap;
+	std::queue<uint32_t> m_freeTextureIds;
+	uint32_t m_nextTextureId;
+
 	/* Bounded */
 	TVertexArrayObject* m_currentVertexArray;
 	TBufferObject*      m_currentArrayBuffer;
 	TBufferObject*      m_currentElementBuffer;
+	TTexture*           m_currentTexture;
 
 	/* Shader */
 	TShader* m_currentShader;
@@ -92,6 +105,7 @@ private:
 private:
 	uint32_t AllocateBufferId();
 	uint32_t AllocateVaoId();
+	uint32_t AllocateTextureId();
 
 	int GetPrimitiveCount(TDrawMode mode);
 

@@ -22,6 +22,15 @@ uint32_t TRGBA::ToBGR888() const
 		   ((uint32_t)r << 16));
 }
 
+tmath::Vec4f TRGBA::ToVec4f() const
+{
+	return tmath::Vec4f(
+		r / 255.0f,
+		g / 255.0f,
+		b / 255.0f,
+		a / 255.0f);
+}
+
 TRGBA TRGBA::Lerp(const TRGBA& other, float t) const
 {
 	return TRGBA(

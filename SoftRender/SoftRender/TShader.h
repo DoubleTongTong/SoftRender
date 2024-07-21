@@ -3,12 +3,15 @@
 #include "TVector.h"
 #include "TMatrix.h"
 #include "TVertexArrayObject.h"
+#include "TTexture.h"
 #include <functional>
+#include <variant>
+#include <unordered_map>
 
 class TShaderContext
 {
 public:
-	TShaderContext(const TVertexArrayObject* vao);
+	TShaderContext(const TVertexArrayObject* vao, const TTexture* texture);
 
 	template<typename T>
 	void GetAttribute(uint32_t location, T& out) const
@@ -24,20 +27,19 @@ public:
 	}
 
 	void SetVertexIndex(uint32_t index);
+
+	tmath::Vec4f texture(const tmath::Vec2f& uv) const;
 private:
 	const TVertexArrayObject* m_vao;
+	const TTexture* m_texture;
 	uint32_t m_currentVertexIndex;
 };
 
+using TShaderVariable = std::variant<tmath::Vec2f, tmath::Vec3f, tmath::Vec4f>;
 struct TVertexShaderOutput
 {
-	tmath::Vec4f position;
-
-	bool useColor;
-	tmath::Vec4f color;
-
-	bool useUV;
-	tmath::Vec2f uv;
+	tmath::Vec4f builtin_position;
+	std::unordered_map<std::string, TShaderVariable> variables;
 
 	TVertexShaderOutput();
 	virtual ~TVertexShaderOutput();
@@ -63,5 +65,8 @@ class TShader
 public:
 	virtual ~TShader();
 	virtual void VertexShader(const TShaderContext& context, TVertexShaderOutput& output) = 0;
-	virtual void FragmentShader(const TVertexShaderOutput& input, TFragmentShaderOutput& output) = 0;
+	virtual void FragmentShader(
+		const TShaderContext& context,
+		const TVertexShaderOutput& input,
+		TFragmentShaderOutput& output) = 0;
 };

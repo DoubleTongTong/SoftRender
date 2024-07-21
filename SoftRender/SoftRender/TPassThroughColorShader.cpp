@@ -5,13 +5,17 @@ void TPassThroughColorShader::VertexShader(const TShaderContext& context, TVerte
 	tmath::Vec3f position;
 	context.GetAttribute(0, position);
 
-	output.position = projectionMatrix * viewMatrix * modelMatrix * tmath::Vec4f(position, 1.0f);
+	output.builtin_position = projectionMatrix * viewMatrix * modelMatrix * tmath::Vec4f(position, 1.0f);
 
-	output.useColor = true;
-	context.GetAttribute(1, output.color);
+	tmath::Vec4f color;
+	context.GetAttribute(1, color);
+	output.variables["color"] = color;
 }
 
-void TPassThroughColorShader::FragmentShader(const TVertexShaderOutput& input, TFragmentShaderOutput& output)
+void TPassThroughColorShader::FragmentShader(
+	const TShaderContext& context,
+	const TVertexShaderOutput& input,
+	TFragmentShaderOutput& output)
 {
-	output.color = input.color;
+	output.color = std::get<tmath::Vec4f>(input.variables.at("color"));
 }

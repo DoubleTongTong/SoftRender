@@ -1,7 +1,7 @@
 #include "TTextureUVRenderTask.h"
 
 TTextureUVRenderTask::TTextureUVRenderTask(TBasicWindow& win)
-	: m_texture("image/dog.jpg")
+	: m_texture("image/dog.jpg", TImage::ColorFormat::BGRA)
 {
 	int maxWidth = win.GetWindowWidth();
 	int maxHeight = win.GetWindowHeight();

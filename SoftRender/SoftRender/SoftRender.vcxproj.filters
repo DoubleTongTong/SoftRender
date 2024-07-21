@@ -145,6 +145,12 @@
     <Filter Include="源文件\render_tasks\blending">
       <UniqueIdentifier>{0e4b1dcf-c376-44d2-8385-967c4fd955fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\texture_interface">
+      <UniqueIdentifier>{2fbee37b-bedc-44b2-aed4-1d65064f64f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\texture_interface">
+      <UniqueIdentifier>{4d147abe-d63e-43b3-b849-75393f35c3c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -233,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="TBlendTestRenderTask.cpp">
       <Filter>源文件\render_tasks\blending</Filter>
+    </ClCompile>
+    <ClCompile Include="TTexture.cpp">
+      <Filter>源文件\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TImageTextureRenderTask.cpp">
+      <Filter>源文件\render_tasks\texture_interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +343,12 @@
     </ClInclude>
     <ClInclude Include="TBlendTestRenderTask.h">
       <Filter>头文件\render_tasks\blending</Filter>
+    </ClInclude>
+    <ClInclude Include="TTexture.h">
+      <Filter>头文件\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TImageTextureRenderTask.h">
+      <Filter>头文件\render_tasks\texture_interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,11 @@
 TSoftRenderer::TSoftRenderer()
 	: m_nextBufferId(0),
 	  m_nextVaoId(0),
+	  m_nextTextureId(0),
 	  m_currentArrayBuffer(NULL),
 	  m_currentElementBuffer(NULL),
 	  m_currentVertexArray(NULL),
+	  m_currentTexture(NULL),
 	  m_currentShader(NULL)
 {
 }
@@ -264,6 +266,72 @@ void TSoftRenderer::PrintVAO(uint32_t vao)
 	it->second->Print();
 }
 
+uint32_t TSoftRenderer::AllocateTextureId()
+{
+	if (m_freeTextureIds.empty())
+		return ++m_nextTextureId;
+	else
+	{
+		uint32_t id = m_freeTextureIds.front();
+		m_freeTextureIds.pop();
+		return id;
+	}
+}
+
+void TSoftRenderer::GenTextures(uint32_t n, uint32_t* textures)
+{
+	for (uint32_t i = 0; i < n; i++)
+	{
+		uint32_t id = AllocateTextureId();
+		m_textureMap[id] = new TTexture(id);
+		textures[i] = id;
+	}
+}
+
+void TSoftRenderer::BindTexture(uint32_t texture)
+{
+	TTexture* texturePtr = NULL;
+
+	if (texture != 0)
+	{
+		auto it = m_textureMap.find(texture);
+		assert(it != m_textureMap.end());
+
+		texturePtr = it->second;
+	}
+
+	m_currentTexture = texturePtr;
+}
+
+void TSoftRenderer::TexImage2D(int width, int height, void* data)
+{
+	assert(m_currentTexture != NULL);
+
+	m_currentTexture->SetTextureData(width, height, data);
+}
+
+void TSoftRenderer::TexParameter(TTextureParam pname, int param)
+{
+	assert(m_currentTexture != NULL);
+
+	m_currentTexture->SetParameter(pname, param);
+}
+
+void TSoftRenderer::DeleteTextures(uint32_t n, uint32_t* textures)
+{
+	for (uint32_t i = 0; i < n; i++)
+	{
+		uint32_t id = textures[i];
+		auto it = m_textureMap.find(id);
+		if (it != m_textureMap.end())
+		{
+			delete it->second;
+			m_textureMap.erase(it);
+			m_freeTextureIds.push(id);
+		}
+	}
+}
+
 void TSoftRenderer::UseProgram(TShader* shader)
 {
 	m_currentShader = shader;
@@ -293,8 +361,9 @@ void TSoftRenderer::DrawElements(
 {
 	uint32_t* indexData = (uint32_t*)(m_currentElementBuffer->GetBufferData() + offset);
 
-	FragmentShaderFunction fragFunc = std::bind(&TShader::FragmentShader, m_currentShader, std::placeholders::_1, std::placeholders::_2);
-	TShaderContext context(m_currentVertexArray);
+	TShaderContext context(m_currentVertexArray, m_currentTexture);
+	FragmentShaderFunction fragFunc = std::bind(&TShader::FragmentShader, m_currentShader, std::cref(context), std::placeholders::_1, std::placeholders::_2);
+
 	TVertexShaderOutputPrivate vertexOutputs[3];
 	std::vector<TVertexShaderOutputPrivate> clippedVertices(10);
 	int primitive = GetPrimitiveCount(mode);
@@ -326,16 +395,19 @@ void TSoftRenderer::DrawElements(
 		for (TVertexShaderOutputPrivate& vertex : clippedVertices)
 		{
 			// 透视除法
-			vertex.invW = 1 / vertex.position.w();
+			vertex.invW = 1 / vertex.builtin_position.w();
 
-			vertex.position *= vertex.invW;
-			if (vertex.useColor)
-				vertex.color *= vertex.invW;
-			else
-				vertex.uv *= vertex.invW;
+			vertex.builtin_position *= vertex.invW;
+
+			for (auto& var : vertex.variables)
+			{
+				std::visit([&](auto&& val) {
+					val *= vertex.invW;
+				}, var.second);
+			}
 
 			// NDC - 屏幕
-			vertex.position = m_screenMatrix * vertex.position;
+			vertex.builtin_position = m_screenMatrix * vertex.builtin_position;
 		}
 
 		switch (mode)
@@ -401,8 +473,8 @@ void TSoftRenderer::ClipPolygonAgainstBoundary(
 		const TVertexShaderOutputPrivate& prev = vertices[prevIndex];
 		const TVertexShaderOutputPrivate& current = vertices[i];
 
-		float prevDistance = tmath::dot(prev.position, boundary);
-		float currentDistance = tmath::dot(current.position, boundary);
+		float prevDistance = tmath::dot(prev.builtin_position, boundary);
+		float currentDistance = tmath::dot(current.builtin_position, boundary);
 
 		if (currentDistance > 0)
 		{
@@ -432,8 +504,8 @@ bool TSoftRenderer::ShouldCullTriangle(
 	if (m_state.IsCullingEnabled() == false)
 		return false;
 
-	tmath::Vec3f edge1 = static_cast<tmath::Vec4f>(v2.position - v1.position);
-	tmath::Vec3f edge2 = static_cast<tmath::Vec4f>(v3.position - v1.position);
+	tmath::Vec3f edge1 = static_cast<tmath::Vec4f>(v2.builtin_position - v1.builtin_position);
+	tmath::Vec3f edge2 = static_cast<tmath::Vec4f>(v3.builtin_position - v1.builtin_position);
 
 	tmath::Vec3f normal = tmath::cross(edge1, edge2);
 

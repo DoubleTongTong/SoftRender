@@ -1,8 +1,8 @@
 #include "TImageDisplayTask.h"
 
 TImageDisplayTask::TImageDisplayTask()
-	: m_img("image/dog.jpg"),
-	  m_image_png("image/ivysaur.png")
+	: m_img("image/dog.jpg", TImage::ColorFormat::BGRA),
+	  m_image_png("image/ivysaur.png", TImage::ColorFormat::BGRA)
 {
 }
 

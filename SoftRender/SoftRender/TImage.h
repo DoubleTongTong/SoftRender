@@ -3,8 +3,14 @@
 class TImage
 {
 public:
+	enum class ColorFormat
+	{
+		RGBA,
+		BGRA,
+	};
+
 	TImage();
-	TImage(const char* filePath);
+	TImage(const char* filePath, ColorFormat format);
 	TImage(const unsigned char* data, int width, int height);
 	~TImage();
 

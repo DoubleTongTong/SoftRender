@@ -20,6 +20,7 @@ public:
 	TRGBA(const BGRA* bgra);
 	TRGBA Lerp(const TRGBA& other, float t) const;
 	uint32_t ToBGR888() const;
+	tmath::Vec4f ToVec4f() const;
 
 	static TRGBA Interpolate(const TRGBA& color1, float w1,
 		const TRGBA& color2, float w2,

@@ -11,17 +11,20 @@ TImage::TImage()
 {
 }
 
-TImage::TImage(const char* filePath)
+TImage::TImage(const char* filePath, ColorFormat format)
 {
 	m_data = stbi_load(filePath, &m_width, &m_height, &m_channels, 4);
 	assert(m_data);
 
-	unsigned char tmp;
-	for (int i = 0; i < m_width * m_height * 4; i += 4)
+	if (format == ColorFormat::BGRA)
 	{
-		tmp = m_data[i];
-		m_data[i] = m_data[i + 2];
-		m_data[i + 2] = tmp;
+		unsigned char tmp;
+		for (int i = 0; i < m_width * m_height * 4; i += 4)
+		{
+			tmp = m_data[i];
+			m_data[i] = m_data[i + 2];
+			m_data[i + 2] = tmp;
+		}
 	}
 
 	m_ownsData = false;

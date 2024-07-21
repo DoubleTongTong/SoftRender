@@ -119,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,6 +159,7 @@
     <ClCompile Include="TDepthTestRenderTask.cpp" />
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
+    <ClCompile Include="TImageTextureRenderTask.cpp" />
     <ClCompile Include="TMatrixOpsTask.cpp" />
     <ClCompile Include="TPassThroughColorShader.cpp" />
     <ClCompile Include="TPassThroughUvShader.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="TRenderState.cpp" />
     <ClCompile Include="TShader.cpp" />
     <ClCompile Include="TSoftRenderer.cpp" />
+    <ClCompile Include="TTexture.cpp" />
     <ClCompile Include="TTextureUVRenderTask.cpp" />
     <ClCompile Include="TTriangleOGLPipelineRenderTask.cpp" />
     <ClCompile Include="TVectorOpsRenderTask.cpp" />
@@ -191,6 +194,7 @@
     <ClInclude Include="TDepthTestRenderTask.h" />
     <ClInclude Include="TImage.h" />
     <ClInclude Include="TImageDisplayTask.h" />
+    <ClInclude Include="TImageTextureRenderTask.h" />
     <ClInclude Include="TMatrix.h" />
     <ClInclude Include="TMatrixOpsTask.h" />
     <ClInclude Include="TPassThroughColorShader.h" />
@@ -201,6 +205,7 @@
     <ClInclude Include="TRenderState.h" />
     <ClInclude Include="TShader.h" />
     <ClInclude Include="TSoftRenderer.h" />
+    <ClInclude Include="TTexture.h" />
     <ClInclude Include="TTextureUVRenderTask.h" />
     <ClInclude Include="TTriangleOGLPipelineRenderTask.h" />
     <ClInclude Include="TVector.h" />

@@ -5,13 +5,18 @@ void TPassThroughUvShader::VertexShader(const TShaderContext& context, TVertexSh
 	tmath::Vec3f position;
 	context.GetAttribute(0, position);
 
-	output.position = projectionMatrix * viewMatrix * modelMatrix * tmath::Vec4f(position, 1.0f);
+	output.builtin_position = projectionMatrix * viewMatrix * modelMatrix * tmath::Vec4f(position, 1.0f);
 
-	output.useUV = true;
-	context.GetAttribute(2, output.uv);
+	tmath::Vec2f uv;
+	context.GetAttribute(2, uv);
+	output.variables["uv"] = uv;
 }
 
-void TPassThroughUvShader::FragmentShader(const TVertexShaderOutput& input, TFragmentShaderOutput& output)
+void TPassThroughUvShader::FragmentShader(
+	const TShaderContext& context,
+	const TVertexShaderOutput& input,
+	TFragmentShaderOutput& output)
 {
-	output.color = input.color;
+	tmath::Vec2f uv = std::get<tmath::Vec2f>(input.variables.at("uv"));
+	output.color = context.texture(uv);
 }
