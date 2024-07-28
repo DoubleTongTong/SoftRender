@@ -275,6 +275,12 @@ namespace tmath
 	}
 
 	template<typename T>
+	T radToDeg(T degrees)
+	{
+		return degrees * (180.0 / M_PI);
+	}
+
+	template<typename T>
 	Matrix<T, 4, 4> TranslationMatrix(T tx, T ty, T tz)
 	{
 		return Matrix<T, 4, 4>({

@@ -1,5 +1,8 @@
 #include "TBasicWindow.h"
 #include <assert.h>
+#include <windowsx.h>
+
+std::vector<IInputHandler*> TBasicWindow::m_inputHandlers;
 
 TBasicWindow::TBasicWindow(HINSTANCE hInst,
     int width, int height,
@@ -98,6 +101,13 @@ HWND TBasicWindow::Create(LPCWSTR windowTitle, int width, int height)
 
 LRESULT CALLBACK TBasicWindow::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    int posX;
+    int posY;
+
+    bool leftButton = false;
+    bool rightButton = false;
+    bool middleButton = false;
+
     switch (uMsg)
     {
     case WM_DESTROY:
@@ -121,6 +131,29 @@ LRESULT CALLBACK TBasicWindow::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, L
 
 		return 0;
 	}
+
+    case WM_KEYDOWN:
+        for (auto handler : m_inputHandlers)
+            handler->OnKeyDown(wParam);
+        break;
+
+    case WM_KEYUP:
+        for (auto handler : m_inputHandlers)
+            handler->OnKeyUp(wParam);
+        break;
+
+    case WM_MOUSEMOVE:
+        posX = GET_X_LPARAM(lParam);
+        posY = GET_Y_LPARAM(lParam);
+
+        leftButton = wParam & MK_LBUTTON;
+        rightButton = wParam & MK_RBUTTON;
+        middleButton = wParam & MK_MBUTTON;
+
+        for (auto handler : m_inputHandlers)
+            handler->OnMouseMove(posX, posY, leftButton, rightButton, middleButton);
+        break;
+
     default:
         return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
@@ -191,4 +224,9 @@ int TBasicWindow::GetWindowWidth()
 int TBasicWindow::GetWindowHeight()
 {
     return m_windowHeight;
+}
+
+void TBasicWindow::AddInputHandler(IInputHandler* handler)
+{
+    m_inputHandlers.push_back(handler);
 }

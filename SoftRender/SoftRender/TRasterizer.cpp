@@ -454,6 +454,9 @@ bool TRasterizer::DepthTest(int x, int y, float depth)
 	if (m_state->IsDepthTestEnabled() == false)
 		return true;
 
+	if (x >= m_width || y >= m_height)
+		return false;
+
 	static const std::unordered_map<TDepthFunc, std::function<bool(float, float)>> depthFuncMap =
 	{
 		{ TDepthFunc::Less,         [](float depth, float storedDepth) { return depth < storedDepth; } },

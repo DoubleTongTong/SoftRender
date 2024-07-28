@@ -151,6 +151,18 @@
     <Filter Include="源文件\render_tasks\texture_interface">
       <UniqueIdentifier>{4d147abe-d63e-43b3-b849-75393f35c3c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\render_tasks\Camera">
+      <UniqueIdentifier>{e71902eb-7bd2-42bc-bed2-61cc74b41d29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\render_tasks\Camera">
+      <UniqueIdentifier>{07c1e1a9-6de4-4ad7-954f-a6941a37a48e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\render_tasks\camera_control">
+      <UniqueIdentifier>{112bd85b-e69a-4697-92fc-8c1e90cbef8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\camera_control">
+      <UniqueIdentifier>{7bcf1d5a-3a57-4122-80d5-52799dd3cc78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -245,6 +257,12 @@
     </ClCompile>
     <ClCompile Include="TImageTextureRenderTask.cpp">
       <Filter>源文件\render_tasks\texture_interface</Filter>
+    </ClCompile>
+    <ClCompile Include="TCameraController.cpp">
+      <Filter>源文件\render_tasks\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="TCameraRenderTask.cpp">
+      <Filter>源文件\render_tasks\camera_control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +367,15 @@
     </ClInclude>
     <ClInclude Include="TImageTextureRenderTask.h">
       <Filter>头文件\render_tasks\texture_interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IInputHandler.h">
+      <Filter>头文件\window</Filter>
+    </ClInclude>
+    <ClInclude Include="TCameraController.h">
+      <Filter>头文件\render_tasks\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="TCameraRenderTask.h">
+      <Filter>头文件\render_tasks\camera_control</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

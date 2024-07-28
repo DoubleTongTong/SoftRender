@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "TSoftRenderer.h"
 #include "IRenderTask.h"
+#include "IInputHandler.h"
 
 class TBasicWindow
 {
@@ -18,6 +19,8 @@ public:
 
 	int GetWindowWidth();
 	int GetWindowHeight();
+
+	void AddInputHandler(IInputHandler* handler);
 private:
 	HWND Create(LPCWSTR windowTitle, int width, int height);
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -40,6 +43,8 @@ private:
 	ULONGLONG m_lastRenderTime;
 	const int TARGET_FPS = 30;
 	const ULONGLONG FRAME_DURATION = 1000 / TARGET_FPS; // in milliseconds
+
+	static std::vector<IInputHandler*> m_inputHandlers;
 public:
 	TBasicWindow(const TBasicWindow&) = delete;
 	TBasicWindow& operator=(const TBasicWindow&) = delete;
