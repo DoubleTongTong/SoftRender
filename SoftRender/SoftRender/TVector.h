@@ -49,6 +49,14 @@ namespace tmath
 			return elements[i];
 		}
 
+		Vector operator-() const
+		{
+			Vector res;
+			for (size_t i = 0; i < N; i++)
+				res[i] = -elements[i];
+			return res;
+		}
+
 		Vector operator+(const Vector& rhs) const
 		{
 			Vector res;
@@ -62,6 +70,14 @@ namespace tmath
 			Vector res;
 			for (size_t i = 0; i < N; i++)
 				res[i] = elements[i] - rhs.elements[i];
+			return res;
+		}
+
+		Vector operator*(const Vector& rhs) const
+		{
+			Vector res;
+			for (size_t i = 0; i < N; i++)
+				res[i] = elements[i] * rhs.elements[i];
 			return res;
 		}
 

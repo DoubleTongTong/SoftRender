@@ -2,13 +2,13 @@
 
 #pragma comment(linker, "/subsystem:console /entry:wWinMainCRTStartup")
 
-#include "TCameraRenderTask.h"
+#include "TLambertianRenderTask.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
     TBasicWindow win(hInstance);
 
-    TCameraRenderTask task(win);
+    TLambertianRenderTask task(win);
     win.SetRenderTask(&task);
 
     win.RunMessageLoop();

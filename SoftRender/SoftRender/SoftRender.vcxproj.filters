@@ -163,6 +163,12 @@
     <Filter Include="源文件\render_tasks\camera_control">
       <UniqueIdentifier>{7bcf1d5a-3a57-4122-80d5-52799dd3cc78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\lambertian">
+      <UniqueIdentifier>{f455cbba-291a-45af-9df3-ec110796e2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\lambertian">
+      <UniqueIdentifier>{feaa9e6a-5366-4bd1-837e-7229afaa141e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -263,6 +269,18 @@
     </ClCompile>
     <ClCompile Include="TCameraRenderTask.cpp">
       <Filter>源文件\render_tasks\camera_control</Filter>
+    </ClCompile>
+    <ClCompile Include="TLambertianRenderTask.h">
+      <Filter>头文件\render_tasks\lambertian</Filter>
+    </ClCompile>
+    <ClCompile Include="TLambertianRenderTask.cpp">
+      <Filter>源文件\render_tasks\lambertian</Filter>
+    </ClCompile>
+    <ClCompile Include="TLambertianShader.h">
+      <Filter>头文件\render_tasks\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TLambertianShader.cpp">
+      <Filter>源文件\render_tasks\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

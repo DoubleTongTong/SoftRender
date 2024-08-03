@@ -163,6 +163,10 @@
     <ClCompile Include="TImage.cpp" />
     <ClCompile Include="TImageDisplayTask.cpp" />
     <ClCompile Include="TImageTextureRenderTask.cpp" />
+    <ClCompile Include="TLambertianRenderTask.cpp" />
+    <ClCompile Include="TLambertianRenderTask.h" />
+    <ClCompile Include="TLambertianShader.cpp" />
+    <ClCompile Include="TLambertianShader.h" />
     <ClCompile Include="TMatrixOpsTask.cpp" />
     <ClCompile Include="TPassThroughColorShader.cpp" />
     <ClCompile Include="TPassThroughUvShader.cpp" />
