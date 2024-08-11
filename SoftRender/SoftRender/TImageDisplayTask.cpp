@@ -1,9 +1,9 @@
 #include "TImageDisplayTask.h"
 
 TImageDisplayTask::TImageDisplayTask()
-	: m_img("image/dog.jpg", TImage::ColorFormat::BGRA),
-	  m_image_png("image/ivysaur.png", TImage::ColorFormat::BGRA)
 {
+	m_img = TImage::LoadFromFile("image/dog.jpg", TImage::ColorFormat::BGRA);
+	m_image_png = TImage::LoadFromFile("image/ivysaur.png", TImage::ColorFormat::BGRA);
 }
 
 void TImageDisplayTask::Render(TSoftRenderer& sr)

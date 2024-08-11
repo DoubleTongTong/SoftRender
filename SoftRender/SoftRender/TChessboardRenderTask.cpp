@@ -80,7 +80,7 @@ TChessboardRenderTask::TChessboardRenderTask(TBasicWindow& win)
         }
     }
 
-    m_texture = TImage((const unsigned char*)chessboardTexture.data(), 8, 8);
+    m_texture = TImage::LoadFromRawData((const unsigned char*)chessboardTexture.data(), 8, 8);
     sr.SetTexture(&m_texture);
 }
 

@@ -2,91 +2,88 @@
 #include "stb_image.h"
 #include "TImage.h"
 
+#include <utility>
+
+TImage::TImage(unsigned char* data, int width, int height, int channels, bool useStbFree)
+	: m_data(data), m_width(width), m_height(height), m_channels(channels), m_useStbFree(useStbFree)
+{
+}
+
 TImage::TImage()
-	: m_width(0),
-	  m_height(0),
-	  m_channels(0),
-	  m_data(NULL),
-	  m_ownsData(true)
+	: m_data(NULL), m_width(0), m_height(0), m_channels(0), m_useStbFree(false)
 {
-}
-
-TImage::TImage(const char* filePath, ColorFormat format)
-{
-	m_data = stbi_load(filePath, &m_width, &m_height, &m_channels, 4);
-	assert(m_data);
-
-	if (format == ColorFormat::BGRA)
-	{
-		unsigned char tmp;
-		for (int i = 0; i < m_width * m_height * 4; i += 4)
-		{
-			tmp = m_data[i];
-			m_data[i] = m_data[i + 2];
-			m_data[i + 2] = tmp;
-		}
-	}
-
-	m_ownsData = false;
-}
-
-TImage::TImage(const unsigned char* data, int width, int height)
-{
-	m_width = width;
-	m_height = height;
-	m_channels = 4;
-
-	m_data = new unsigned char[width * height * 4];
-	memcpy(m_data, data, width * height * 4);
-
-	m_ownsData = true;
 }
 
 TImage::~TImage()
 {
 	if (m_data)
 	{
-		if (m_ownsData)
-			delete[] m_data;
-		else
+		if (m_useStbFree)
 			stbi_image_free(m_data);
+		else
+			delete[] m_data;
 	}
 }
 
 TImage::TImage(TImage&& other) noexcept
-	: m_data(other.m_data),
-	  m_width(other.m_width),
-	  m_height(other.m_height),
-	  m_channels(other.m_channels),
-	  m_ownsData(other.m_ownsData)
+	: TImage()
 {
-	other.m_data = NULL;
-	other.m_width = 0;
-	other.m_height = 0;
-	other.m_channels = 0;
-	other.m_ownsData = true;
+	swap(other);
 }
 
 TImage& TImage::operator=(TImage&& other) noexcept
 {
 	if (this != &other)
 	{
-		this->~TImage();
-
-		m_data = other.m_data;
-		m_width = other.m_width;
-		m_height = other.m_height;
-		m_channels = other.m_channels;
-		m_ownsData = other.m_ownsData;
-
-		other.m_data = NULL;
-		other.m_width = 0;
-		other.m_height = 0;
-		other.m_channels = 0;
-		other.m_ownsData = true;
+		TImage tmp(std::move(other));
+		swap(tmp);
 	}
 
 	return *this;
+}
+
+void TImage::swap(TImage& other) noexcept
+{
+	std::swap(m_data, other.m_data);
+	std::swap(m_width, other.m_width);
+	std::swap(m_height, other.m_height);
+	std::swap(m_channels, other.m_channels);
+	std::swap(m_useStbFree, other.m_useStbFree);
+}
+
+TImage TImage::LoadFromFile(const char* filePath, ColorFormat format)
+{
+	int width, height, channels;
+	unsigned char* data = stbi_load(filePath, &width, &height, &channels, STBI_rgb_alpha);
+	assert(data);
+	if (format == ColorFormat::BGRA)
+	{
+		for (int i = 0; i < width * height * 4; i += 4)
+			std::swap(data[i], data[i + 2]);
+	}
+
+	return TImage(data, width, height, channels, true);
+}
+
+TImage TImage::LoadFromRawData(const unsigned char* data, int width, int height)
+{
+	int channels = 4; // Assuming RGBA or BGRA format
+	unsigned char* copiedData = new unsigned char[width * height * channels];
+	memcpy(copiedData, data, width * height * channels);
+	return TImage(copiedData, width, height, channels, false);
+}
+
+TImage TImage::LoadFromMemoryBuffer(const unsigned char* buffer, size_t bufferSize, ColorFormat format)
+{
+	int width, height, channels;
+	unsigned char* data = stbi_load_from_memory(buffer, bufferSize, &width, &height, &channels, STBI_rgb_alpha);
+	if (format == ColorFormat::BGRA)
+	{
+		for (int i = 0; i < width * height * 4; i += 4)
+			std::swap(data[i], data[i + 2]);
+	}
+
+	return TImage(data, width, height, channels, true);
 }
 
 unsigned char* TImage::GetData() const

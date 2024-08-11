@@ -83,7 +83,7 @@ TLambertianRenderTask::TLambertianRenderTask(TBasicWindow& win)
 	sr.GenTextures(1, &textureId);
 	sr.BindTexture(textureId);
 
-	TImage img("image/dog.jpg", TImage::ColorFormat::RGBA);
+	TImage img = TImage::LoadFromFile("image/dog.jpg");
 	sr.TexImage2D(img.GetWidth(), img.GetHeight(), img.GetData());
 
 	sr.TexParameter(TTextureParam::WrapS, (int)TTextureWrapMode::Repeat);

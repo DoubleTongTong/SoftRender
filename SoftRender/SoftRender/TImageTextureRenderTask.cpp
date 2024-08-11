@@ -94,7 +94,7 @@ TImageTextureRenderTask::TImageTextureRenderTask(TBasicWindow& win)
 
     sr.TexImage2D(8, 8, chessboardTexture.data());
 #else
-    TImage img("image/dog.jpg", TImage::ColorFormat::RGBA);
+    TImage img = TImage::LoadFromFile("image/dog.jpg");
     sr.TexImage2D(img.GetWidth(), img.GetHeight(), img.GetData());
 #endif
 

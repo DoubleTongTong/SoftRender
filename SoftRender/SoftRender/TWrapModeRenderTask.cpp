@@ -1,9 +1,9 @@
 #include "TWrapModeRenderTask.h"
 
 TWrapModeRenderTask::TWrapModeRenderTask(TWrapMode mode)
-	: m_texture("image/ivysaur.png", TImage::ColorFormat::BGRA),
-	  m_wrapMode(mode)
+	: m_wrapMode(mode)
 {
+	m_texture = TImage::LoadFromFile("image/ivysaur.png", TImage::ColorFormat::BGRA);
 }
 
 void TWrapModeRenderTask::Render(TSoftRenderer& sr)
