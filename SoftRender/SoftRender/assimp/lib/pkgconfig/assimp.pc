@@ -1,0 +1,9 @@
+libdir=D:/github/assimp/build/install/lib
+includedir=D:/github/assimp/build/install/include
+
+Name: Assimp
+Description: Import various well-known 3D model formats in an uniform manner.
+Version: 5.4.1
+Libs: -L${libdir} -lassimp
+Libs.private:  
+Cflags: -I${includedir}
