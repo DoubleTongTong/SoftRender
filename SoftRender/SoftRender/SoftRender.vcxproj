@@ -78,9 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>assimp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>assimp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -124,9 +128,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc143-mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /Y /D "$(ProjectDir)image\*" "$(OutDir)image\" </Command>
+      <Command>xcopy /Y /D "$(ProjectDir)image\*" "$(OutDir)image\"
+xcopy /Y /D "$(ProjectDir)assimp\bin\*" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,7 +150,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc143-mt.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy /Y /D "$(ProjectDir)image\*" "$(OutDir)image\"
+xcopy /Y /D "$(ProjectDir)assimp\bin\*" "$(OutDir)"
+xcopy /Y /D "$(ProjectDir)model\*" "$(OutDir)model\"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -168,6 +180,10 @@
     <ClCompile Include="TLambertianShader.cpp" />
     <ClCompile Include="TLambertianShader.h" />
     <ClCompile Include="TMatrixOpsTask.cpp" />
+    <ClCompile Include="TMesh.cpp" />
+    <ClCompile Include="TModel.cpp" />
+    <ClCompile Include="TModelRenderTask.cpp" />
+    <ClCompile Include="TNode.cpp" />
     <ClCompile Include="TPassThroughColorShader.cpp" />
     <ClCompile Include="TPassThroughUvShader.cpp" />
     <ClCompile Include="TRadialLinesRenderTask.cpp" />
@@ -207,6 +223,10 @@
     <ClInclude Include="TImageTextureRenderTask.h" />
     <ClInclude Include="TMatrix.h" />
     <ClInclude Include="TMatrixOpsTask.h" />
+    <ClInclude Include="TMesh.h" />
+    <ClInclude Include="TModel.h" />
+    <ClInclude Include="TModelRenderTask.h" />
+    <ClInclude Include="TNode.h" />
     <ClInclude Include="TPassThroughColorShader.h" />
     <ClInclude Include="TPassThroughUvShader.h" />
     <ClInclude Include="TRadialLinesRenderTask.h" />

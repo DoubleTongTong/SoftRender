@@ -169,6 +169,18 @@
     <Filter Include="源文件\render_tasks\lambertian">
       <UniqueIdentifier>{feaa9e6a-5366-4bd1-837e-7229afaa141e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\render_tasks\Model">
+      <UniqueIdentifier>{73c01901-9a8d-423a-a64d-6a80cc882d1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\Model">
+      <UniqueIdentifier>{4674ab12-b3bc-408c-bcc3-514cc919fc94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\render_tasks\model_loading">
+      <UniqueIdentifier>{63b39188-3cd3-4ea6-b64f-e91754e88763}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\render_tasks\model_loading">
+      <UniqueIdentifier>{0023ea86-3839-42ba-964f-39a91ce991d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TBasicWindow.cpp">
@@ -282,6 +294,18 @@
     <ClCompile Include="TLambertianShader.cpp">
       <Filter>源文件\render_tasks\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="TMesh.cpp">
+      <Filter>源文件\render_tasks\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="TNode.cpp">
+      <Filter>源文件\render_tasks\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="TModel.cpp">
+      <Filter>源文件\render_tasks\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="TModelRenderTask.cpp">
+      <Filter>源文件\render_tasks\model_loading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TBasicWindow.h">
@@ -394,6 +418,18 @@
     </ClInclude>
     <ClInclude Include="TCameraRenderTask.h">
       <Filter>头文件\render_tasks\camera_control</Filter>
+    </ClInclude>
+    <ClInclude Include="TMesh.h">
+      <Filter>头文件\render_tasks\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="TNode.h">
+      <Filter>头文件\render_tasks\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="TModel.h">
+      <Filter>头文件\render_tasks\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="TModelRenderTask.h">
+      <Filter>头文件\render_tasks\model_loading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
