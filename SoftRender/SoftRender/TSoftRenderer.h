@@ -124,6 +124,9 @@ private:
 		const TVertexShaderOutputPrivate& v3
 	);
 
+	bool ShouldClipping(
+		const TVertexShaderOutputPrivate vertexOutputs[3]);
+
 public:
 	TSoftRenderer(TSoftRenderer&& other) noexcept = default;
 	TSoftRenderer& operator=(TSoftRenderer&& other) = default;

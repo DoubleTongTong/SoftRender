@@ -378,17 +378,25 @@ void TSoftRenderer::DrawElements(
 			m_currentShader->VertexShader(context, vertexOutputs[j]);
 		}
 
-		clippedVertices.clear();
-		switch (mode)
+		if (ShouldClipping(vertexOutputs) == false)
 		{
-		case TDrawMode::Triangles:
-			SutherlandHodgmanClipTriangle(vertexOutputs, clippedVertices);
-			break;
-		case TDrawMode::Lines:
-		default:
-			assert(0);
-			break;
+			clippedVertices.assign(vertexOutputs, vertexOutputs + 3);
 		}
+		else
+		{
+			clippedVertices.clear();
+			switch (mode)
+			{
+			case TDrawMode::Triangles:
+				SutherlandHodgmanClipTriangle(vertexOutputs, clippedVertices);
+				break;
+			case TDrawMode::Lines:
+			default:
+				assert(0);
+				break;
+			}
+		}
+
 		if (clippedVertices.empty())
 			continue;
 
@@ -513,4 +521,19 @@ bool TSoftRenderer::ShouldCullTriangle(
 
 	return (m_state.GetCullFace() == TCullFace::Back && !isFrontFacing) ||
 		   (m_state.GetCullFace() == TCullFace::Front && isFrontFacing);
+}
+
+bool TSoftRenderer::ShouldClipping(
+	const TVertexShaderOutputPrivate vertexOutputs[3])
+{
+	for (int i = 0; i < 3; i++)
+	{
+		const tmath::Vec4f& pos = vertexOutputs[i].builtin_position;
+		float w = pos.w();
+		if (pos.x() < -w || pos.x() > w ||
+			pos.y() < -w || pos.y() > w ||
+			pos.z() < -w || pos.z() > w)
+			return true;
+	}
+	return false;
 }
